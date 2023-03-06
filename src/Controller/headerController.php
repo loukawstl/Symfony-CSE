@@ -11,7 +11,7 @@ class headerController extends AbstractController
     #[Route('/navbar', name: 'navbar')]
     public function test(): Response
     {
-        return $this->render('Header/header.html.twig',[
+        return $this->render('header/header.html.twig',[
             
         ]);
     }
