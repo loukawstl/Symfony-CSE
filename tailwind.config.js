@@ -10,6 +10,7 @@ module.exports = {
           'topblue': '#1B3168',
           'topgrey': '#EFEDED ',
           'activebg': '#B6A886',
+          'footerbg': '#B6A886',
         },
       }
     },
