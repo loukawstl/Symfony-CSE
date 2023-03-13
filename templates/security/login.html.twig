@@ -1,14 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Connexion</h1>
+    <div class="grid grid-cols-3">
+        <div class="col-start-2 my-28 border p-3.5 rounded-lg text-center shadow-lg">
+            <h1>Connexion</h1>
 
-    {{ form_start(form) }}
-        {{ form_errors(form) }}
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+        
+                {{ form_row(form.utilisateur , {'attr': {'class': 'border p-1.5 mt-4 mb-2.5 ml-2 rounded-lg'}}) }}
+                {{ form_row(form.motDePasse , {'attr': {'class': 'border p-1.5 mb-4 ml-2 rounded-lg'}}) }}
 
-        {{ form_row(form.username) }}
-        {{ form_row(form.password) }}
-
-        <button type="submit">Se connecter</button>
-    {{ form_end(form) }}
+                <button class="bg-blueHome text-white p-2 rounded-lg border hover:shadow-lg" type="submit">Se connecter</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}
