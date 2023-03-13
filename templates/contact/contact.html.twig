@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="bg-blueHome">
-    <h1>Contactez-nous</h1>
+<div class="flex justify-center my-24 border mx-96 p-10 rounded-lg shadow-lg">
     {{ form_start(form) }}
-        {{ form_row(form.nom , {'attr':{'class': 'rounded-lg'}}) }}
-        {{ form_row(form.prenom , {'attr':{'class': 'rounded-lg'}}) }}
-        {{ form_row(form.email , {'attr':{'class': 'rounded-lg'}}) }}
-        {{ form_row(form.message , {'attr':{'class': 'rounded-lg'}}) }}
+    <h1 class="flex justify-center text-2xl pb-10 text-ellipsis">NOUS CONTACTER !</h1>
+    <div class="flex justify-between gap-4">
+        {{ form_label(form.name)}}
+        {{ form_widget(form.name , {'attr':{'class': 'rounded-lg border p-1.5 '}}) }}
+        {{ form_label(form.firstname)}}
+        {{ form_widget(form.firstname , {'attr':{'class': 'rounded-lg border p-1.5 '}}) }}
+    </div>
+    <div class="mt-4">
+        {{ form_label(form.email)}}
+        {{ form_widget(form.email , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+        {{ form_label(form.message)}}
+        {{ form_widget(form.message , {'attr':{'class': 'rounded-lg border p-1.5 w-full'}}) }}
+    </div>
+    <button class="bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400" type="submit">Envoyer !</button>
     {{ form_end(form) }}
 </div>
 {% endblock %}
