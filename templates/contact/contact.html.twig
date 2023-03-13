@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="bg-blueHome">
+    <h1>Contactez-nous</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.nom , {'attr':{'class': 'rounded-lg'}}) }}
+        {{ form_row(form.prenom , {'attr':{'class': 'rounded-lg'}}) }}
+        {{ form_row(form.email , {'attr':{'class': 'rounded-lg'}}) }}
+        {{ form_row(form.message , {'attr':{'class': 'rounded-lg'}}) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}
