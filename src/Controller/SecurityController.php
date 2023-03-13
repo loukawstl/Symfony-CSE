@@ -2,30 +2,65 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin;
 use App\Form\LoginType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SecurityController extends AbstractController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * @Route("/login", name="login")
      */
     public function login(Request $request)
     {
-        // Création du formulaire de connexion
         $form = $this->createForm(LoginType::class);
 
         // Traitement de la soumission du formulaire
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // TODO : traitement de la connexion
+            $formData = $form->getData();
+
+            // Validation de l'utilisateur et du mot de passe
+            $isValid = $this->validateUser($formData['username'], $formData['password']);
+            if (!$isValid) {
+                $this->addFlash('error', 'Nom d\'utilisateur ou mot de passe invalide.');
+                return $this->redirectToRoute('login');
+            }
+
+            // Rediriger l'utilisateur après la connexion réussie
+            return $this->redirectToRoute('admin');
         }
 
         // Affichage du formulaire de connexion
         return $this->render('security/login.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * Valide l'utilisateur et son mot de passe.
+     */
+    private function validateUser(string $username, string $password): bool
+    {
+        // Recherche de l'utilisateur dans la base de données
+        $userRepository = $this->entityManager->getRepository(Admin::class);
+        $user = $userRepository->findOneBy(['username' => $username]);
+
+        if (!$user) {
+            return false;
+        }
+
+        // Vérification du mot de passe
+        return password_verify($password, $user->getPassword());
     }
 }
