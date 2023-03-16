@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Contact;
 use Symfony\Component\Form\AbstractType;
+use PixelOpen\CloudflareTurnstileBundle\Type\TurnstileType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -27,6 +28,11 @@ class ContactType extends AbstractType
             ])
             ->add('message', TextareaType::class,[
                 'label' => 'Message :'
+            ])
+            ->add('security', TurnstileType::class, [
+                'attr' => [
+                    'data-action' => 'contact', 'data-theme' => 'light'
+                ], 'label' => false,
             ])
         ;
     }
