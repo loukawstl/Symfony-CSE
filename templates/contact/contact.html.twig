@@ -3,20 +3,18 @@
 {% block body %}
 <div class="flex justify-center my-24 border mx-96 p-10 rounded-lg shadow-lg">
     {{ form_start(form) }}
-    <h1 class="flex justify-center text-3xl pb-10"><b>NOUS CONTACTER !</b></h1>
+    <h1 class="flex justify-center text-3xl pb-10 font-bold">NOUS CONTACTER</h1>
     <div class="flex justify-between gap-4">
-        {{ form_label(form.name)}}
-        {{ form_widget(form.name , {'attr':{'class': 'rounded-lg border p-1.5 '}}) }}
-        {{ form_label(form.firstname)}}
-        {{ form_widget(form.firstname , {'attr':{'class': 'rounded-lg border p-1.5 '}}) }}
+        {{ form_row(form.name , {'attr':{'class': 'rounded-lg border p-1.5 w-full'}}) }}
+        {{ form_row(form.firstname , {'attr':{'class': 'rounded-lg border p-1.5 w-full'}}) }}
     </div>
     <div class="mt-4">
-        {{ form_label(form.email)}}
-        {{ form_widget(form.email , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
-        {{ form_label(form.message)}}
-        {{ form_widget(form.message , {'attr':{'class': 'rounded-lg border p-1.5 w-full'}}) }}
+        {{ form_row(form.email , {'attr':{'class': 'rounded-lg border p-1.5 w-full inline-flex mb-4'}}) }}
+        {{ form_row(form.message , {'attr':{'class': 'rounded-lg border p-1.5 w-full'}}) }}
     </div>
-    <button class="bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400" type="submit">Envoyer !</button>
+    <div class="flex justify-center">
+        <button class="px-5 py-3 bg-blueHome text-white rounded-lg border border-slate-300 hover:border-slate-400 mt-3" type="submit">Envoyer</button>
+    </div>
     {{ form_end(form) }}
 </div>
 {% endblock %}
