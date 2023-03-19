@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="my-24 border mx-96 p-10 rounded-lg shadow-lg">
+        <div class="flex justify-between mb-4">
+            <h1 class="font-bold mt-2"> Administration Offres Limitées </h1>
+            <a class="bg-green-800 text-white p-3 rounded-lg hover:bg-green-600" href=" {{ path('app_limited_offer_create') }}"> Ajouter Une Offre </a>
+        </div>
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th class="px-6 py-4"> Nom </th>
+                    <th class="px-6 py-4"> Date début </th>
+                    <th class="px-6 py-4"> Date fin </th>
+                    <th class="px-6 py-4"> Prix </th>
+                    <th class="px-6 py-4"> Nombre minimum de Places </th>
+                    <th class="px-6 py-4"> Numéro de Page </th>
+                    <th class="px-6 py-4"> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for offer in offers %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-blue-800">
+                        <td class="px-6 py-4"> {{ offer.name }} </td>
+                        <td class="px-6 py-4"> {{ offer.dateStart.format('Y-m-d H:i:s') }} </td>
+                        <td class="px-6 py-4"> {{ offer.dateEnd.format('Y-m-d H:i:s') }} </td>
+                        <td class="px-6 py-4"> {{ offer.price }}€ </td>
+                        <td class="px-6 py-4"> {{ offer.nbMinimumPlaces }} </td>
+                        <td class="px-6 py-4"> {{ offer.numberOrderPage }} </td>
+                        <td class="px-4 py-4"> <a class= "bg-blue-900 text-white p-3 rounded-xl hover:bg-blue-600" href=" {{ path('app_limited_offer_modify', {'id': offer.id }) }}"> Afficher </a> </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

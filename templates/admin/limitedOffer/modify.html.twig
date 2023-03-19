@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/Modal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ModalImage.js') }}"></script>
+{% endblock javascripts %}
+
+{% block body %}
+
+    {{ include('admin/limitedOffer/_modal.html.twig') }}
+    {{ include('admin/limitedOffer/_modalImage.html.twig') }}
+
+    <div class="my-24 border mx-96 p-10 rounded-lg shadow-lg">
+        <h1 class="font-bold mt-2 text-center"> Administration Offres Limitées </h1> 
+
+        {% if errorManager is defined %}
+            <div class="text-red-600"> {{ errorManager | raw }} </div>
+        {% endif %}   
+        {% if successMessage is defined %}
+            <div class="text-green-600"> {{ successMessage | raw }} </div>
+        {% endif %}
+          
+        {{ form_start(form) }}
+            <div class="mt-6">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.name) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.text) }}
+                {{ form_widget(form.text) }}
+                {{ form_errors(form.text) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.dateStart) }}
+                {{ form_widget(form.dateStart , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.dateStart) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.dateEnd) }}
+                {{ form_widget(form.dateEnd , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.dateEnd) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.price) }}
+                {{ form_widget(form.price , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.price) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.nbMinimumPlaces) }}
+                {{ form_widget(form.nbMinimumPlaces , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.nbMinimumPlaces) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.numberOrderPage) }}
+                {{ form_widget(form.numberOrderPage , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.numberOrderPage) }}
+            </div> 
+
+            <div style="display: flex; flex-direction: row; gap : 20px; align-items: center; margin-bottom : 30px">
+                <div class="mt-6">
+                    <h2>Image(s) :</h2>
+                </div>
+                <div>
+                    {{ form_widget(form.files) }}
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; align-items: center">
+                    {% if app.request.attributes.get('_route') == 'app_limited_offer_modify' %}
+                        {% for file in offer.files %}
+                            <img src="{{ asset( file.filePath ) }}" alt=" {{ file.originalName }}" width="500">
+                            <a data-media-id="{{ file.id }}" id="deleteImageButton" class="deleteImageButton bg-red-800 text-white p-3 rounded-xl hover:cursor-pointer hover:bg-red-600">Effacer</a>
+                        {% endfor %}
+                    {% endif %}
+            </div>
+            
+            <div class="flex mt-8 mb-8 justify-between">   
+                <a id="cancelButton" class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_limited_offer_index') }}">Retour</a>
+                <div class="flex gap-2">
+                    <a id="deleteButton" class="bg-red-800 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-red-600">Supprimer</a>
+                    {{ form_widget(form.submit) }}
+                </div>
+            </div>
+            <p class="font-bold text-xs text--grey-400"> * = champ obligatoire </p>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}

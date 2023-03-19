@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="my-24 border mx-96 p-10 rounded-lg shadow-lg">
+        <h1 class="font-bold mt-2 text-center"> Administration Offres Limitées </h1> 
+        {% if errorManager is defined %}
+            <div class="text-red-600"> {{ errorManager | raw }} </div>
+        {% endif %}   
+        {{ form_start(form) }}
+            <div class="mt-6">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.name) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.text) }}
+                {{ form_widget(form.text) }}
+                {{ form_errors(form.text) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.dateStart) }}
+                {{ form_widget(form.dateStart , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.dateStart) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.dateEnd) }}
+                {{ form_widget(form.dateEnd , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.dateEnd) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.price) }}
+                {{ form_widget(form.price , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.price) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.nbMinimumPlaces) }}
+                {{ form_widget(form.nbMinimumPlaces , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.nbMinimumPlaces) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.numberOrderPage) }}
+                {{ form_widget(form.numberOrderPage , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.numberOrderPage) }}
+            </div>
+            
+            <div class="mt-6">
+                {{ form_label(form.files) }}
+                {{ form_widget(form.files) }}
+                {{ form_errors(form.files) }}
+            </div>
+
+            <div class="buttons flex mt-8 mb-8 justify-between">   
+                <a class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_limited_offer_index') }}">Annuler</a>
+                {{ form_widget(form.submit) }}
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
