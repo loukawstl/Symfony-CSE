@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/TextModif')]
+#[Route('/static/content')]
 class StaticContentController extends AbstractController
 {
     #[Route('/', name: 'app_static_content_index', methods: ['GET'])]
@@ -21,7 +21,7 @@ class StaticContentController extends AbstractController
         ]);
     }
 
-    #[Route('/ajouter', name: 'app_static_content_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_static_content_new', methods: ['GET', 'POST'])]
     public function new(Request $request, StaticContentRepository $staticContentRepository): Response
     {
         $staticContent = new StaticContent();
@@ -48,7 +48,7 @@ class StaticContentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/modifier', name: 'app_static_content_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_static_content_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, StaticContent $staticContent, StaticContentRepository $staticContentRepository): Response
     {
         $form = $this->createForm(StaticContentType::class, $staticContent);

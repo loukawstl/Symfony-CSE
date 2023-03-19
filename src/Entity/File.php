@@ -27,13 +27,8 @@ class File
     #[ORM\OneToOne(mappedBy: 'file', cascade: ['persist', 'remove'])]
     private ?Partnership $partnership = null;
 
-    #[ORM\ManyToMany(targetEntity: Offer::class, mappedBy: 'files')]
-    private Collection $partnerships;
-
-    public function __construct()
-    {
-        $this->partnerships = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(targetEntity: Offer::class, inversedBy: 'files')]
+    private ?Offer $offer = null;
 
     public function getId(): ?int
     {
@@ -54,7 +49,7 @@ class File
 
     public function getFilePath(): ?string
     {
-        return $this->file_path;
+        return $this->filePath;
     }
 
     public function setFilePath(string $filePath): self
@@ -98,29 +93,14 @@ class File
         return $this;
     }
 
-    /**
-     * @return Collection<int, Offer>
-     */
-    public function getPartnerships(): Collection
+    public function getOffer(): ?Offer
     {
-        return $this->partnerships;
+        return $this->offer;
     }
 
-    public function addPartnership(Offer $partnership): self
+    public function setOffer(?Offer $offer): self
     {
-        if (!$this->partnerships->contains($partnership)) {
-            $this->partnerships->add($partnership);
-            $partnership->addFile($this);
-        }
-
-        return $this;
-    }
-
-    public function removePartnership(Offer $partnership): self
-    {
-        if ($this->partnerships->removeElement($partnership)) {
-            $partnership->removeFile($this);
-        }
+        $this->offer = $offer;
 
         return $this;
     }

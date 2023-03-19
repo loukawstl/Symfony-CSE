@@ -63,4 +63,15 @@ class OfferRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    /*public function findOfferAndFiles(int $id): ?Offer 
+    {
+        return $this->createQueryBuilder('o')
+            ->innerJoin('o.files', 'f')
+            ->where('o.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }*/
 }

@@ -40,7 +40,7 @@ class Offer
     #[ORM\Column]
     private ?int $numberOrderPage = null;
 
-    #[ORM\ManyToMany(targetEntity: File::class, inversedBy: 'partnerships')]
+    #[ORM\OneToMany(targetEntity: File::class, mappedBy: 'offer', orphanRemoval: true, cascade: ['persist'], fetch: "EAGER")]
     private Collection $files;
 
     public function __construct()
@@ -150,7 +150,7 @@ class Offer
     }
 
     /**
-     * @return Collection<int, File>
+     * @return Collection|Offer[]
      */
     public function getFiles(): Collection
     {
@@ -160,6 +160,7 @@ class Offer
     public function addFile(File $file): self
     {
         if (!$this->files->contains($file)) {
+            $file->setOffer($this);
             $this->files->add($file);
         }
 
@@ -168,7 +169,11 @@ class Offer
 
     public function removeFile(File $file): self
     {
-        $this->files->removeElement($file);
+        if ($this->files->removeElement($file)) {
+            if ($file->getOffer() === $this) {
+                $file->setOffer(null);
+            }
+        }
 
         return $this;
     }
