@@ -64,14 +64,13 @@ class OfferRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    /*public function findOfferAndFiles(int $id): ?Offer 
+    public function findAllLimitedOffers(): ?array
     {
         return $this->createQueryBuilder('o')
-            ->innerJoin('o.files', 'f')
-            ->where('o.id = :id')
-            ->setParameter('id', $id)
+            ->andWhere('o.typeOfOffer = :type')
+            ->setParameter('type', 'limité')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
-    }*/
+    }
 }

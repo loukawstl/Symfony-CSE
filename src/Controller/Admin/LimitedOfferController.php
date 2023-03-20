@@ -20,7 +20,7 @@ class LimitedOfferController extends AbstractController
     #[Route('/OffreLimités', name: 'app_limited_offer_index')]
     public function index(OfferRepository $offerRepository, Request $request): Response
     {
-        $offers = $offerRepository->findAll();
+        $offers = $offerRepository->findAllLimitedOffers();
 
         if ($request->isXmlHttpRequest()) {
             return $tableManager->prepareData($request);
