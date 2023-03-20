@@ -1,4 +1,23 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="flex justify-center my-20 w-full">
+    {{ form_start(form) }}
+        <div>
+            {{ form_label(form.name)}}
+            {{ form_widget(form.name, {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12'}}) }}
+        </div>
+        <div>
+            {{ form_label(form.text)}}
+            {{ form_widget(form.text, {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12'}}) }}
+        </div>
+        <div>
+            {{ form_label(form.linkToWebsite)}}
+            {{ form_widget(form.linkToWebsite , {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12'}}) }}
+        </div>
+        <div>
+            {{ form_label(form.file)}}
+            {{ form_widget(form.file , {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12 pb-10'}}) }}
+        </div>
+        <button class=" inline-flex justify-center bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min">{{ button_label|default('Modifier') }}</button>
+        <a class="inline-flex"href="{{ path('app_partnership_index') }}">Retour</a>
+    
+    {{ form_end(form) }}
+</div>

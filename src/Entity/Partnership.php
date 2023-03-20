@@ -23,7 +23,7 @@ class Partnership
     private ?string $linkToWebsite = null;
 
     #[ORM\OneToOne(inversedBy: 'partnership', cascade: ['persist', 'remove'])]
-    private ?file $file = null;
+    private ?File $file = null;
 
     public function getId(): ?int
     {
@@ -66,15 +66,16 @@ class Partnership
         return $this;
     }
 
-    public function getFile(): ?file
+    public function getFile(): ?File
     {
         return $this->file;
     }
 
-    public function setFile(?file $file): self
+    public function setFile(?File $file): self
     {
         $this->file = $file;
 
         return $this;
     }
 }
+

@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Form;
-use App\Entity\File;
+
 use App\Entity\Partnership;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ImageType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,7 +23,7 @@ class PartnershipType extends AbstractType
             ->add('linkToWebsite', TextType::class, [
                 'label' => 'Lien :'
             ])
-            ->add('file', ImageType::class, [
+            ->add('file', FileType::class, [
                 'label' => 'Images :'
             ])
         ;
