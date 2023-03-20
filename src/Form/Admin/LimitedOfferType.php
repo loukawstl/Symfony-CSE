@@ -66,8 +66,8 @@ class LimitedOfferType extends AbstractType
                     'class' => 'font-bold'
                 ],
             ])
-            ->add('price', MoneyType::class, [
-                'label' => 'Prix: *',
+            ->add('tariff', CKEditorType::class, [
+                'label' => 'Tarif: *',
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(),

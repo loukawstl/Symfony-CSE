@@ -29,7 +29,7 @@ class Offer
     private ?\DateTimeInterface $dateEnd = null;
 
     #[ORM\Column]
-    private ?float $price = null;
+    private ?string $tariff = null;
 
     #[ORM\Column(length: 255)]
     private ?string $typeOfOffer = null;
@@ -101,14 +101,14 @@ class Offer
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getTariff(): ?string
     {
-        return $this->price;
+        return $this->tariff;
     }
 
-    public function setPrice(float $price): self
+    public function setTariff(string $tariff): self
     {
-        $this->price = $price;
+        $this->tariff = $tariff;
 
         return $this;
     }
