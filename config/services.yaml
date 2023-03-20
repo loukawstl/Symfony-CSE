@@ -11,7 +11,7 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-    App\Controller\sidenavPartnershipController:
+    App\Controller\sidenavController:
         tags: ['controller.service_arguments']
 
     # makes classes in src/ available to be used as services
