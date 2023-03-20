@@ -20,7 +20,7 @@ class LimitedOfferController extends AbstractController
     #[Route('/OffreLimités', name: 'app_limited_offer_index')]
     public function index(OfferRepository $offerRepository, Request $request): Response
     {
-        $offers = $offerRepository->findAll();
+        $offers = $offerRepository->findAllLimitedOffers();
 
         if ($request->isXmlHttpRequest()) {
             return $tableManager->prepareData($request);
@@ -101,7 +101,7 @@ class LimitedOfferController extends AbstractController
     {
 
         if ((null === $offer)||($offer->getTypeOfOffer() != "limité")) {
-            return $this->render('admin/limitedOffer/index.html.twig', [
+            return $this->redirectToRoute('app_limited_offer_modify', [
             ]);
         }
 
