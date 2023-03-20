@@ -7,6 +7,7 @@ use App\Entity\StaticContent;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class StaticContentType extends AbstractType
 {
@@ -19,7 +20,7 @@ class StaticContentType extends AbstractType
         ->add('page', TextType::class, [
             'label' => 'Page :'
         ])
-        ->add('content', TextAreaType::class, [
+        ->add('content', CKEditorType::class, [
             'label' => 'Texte :'
         ])
         ;
