@@ -3,36 +3,35 @@
 {% block title %}StaticContent index{% endblock %}
 
 {% block body %}
-    <h1 class="flex justify-center text-2xl my-5"><b>Affichage des texte de la HomePage</b></h1>
     <a class="flex justify-center bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min" href="{{ path('app_static_content_new') }}">Ajouter</a>
-    <table class="table mx-40 my-28">
-        <thead class="">
-            <tr class="border ">
-                <th class="border p-2">Id</th>
-                <th class="border p-2">Section</th>
-                <th class="border p-2">Page</th>
-                <th class="border p-2">Content</th>
-                <th class="border p-2">actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for static_content in static_contents %}
-            <tr>
-                <td class="border p-2">{{ static_content.id }}</td>
-                <td class="border p-2">{{ static_content.section }}</td>
-                <td class="border p-2">{{ static_content.page }}</td>
-                <td class="border p-2">{{ static_content.content }}</td>
-                <td class="border p-2">
-                    <a href="{{ path('app_static_content_edit', {'id': static_content.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Pas de texte </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="flex justify-center my-24 border mx-72 rounded-lg shadow-lg">
+        <table class="table mx-40 my-10">
+            <thead class="">
+                <tr class="border ">
+                    <th class="border p-2">Section</th>
+                    <th class="border p-2">Page</th>
+                    <th class="border p-2">Content</th>
+                    <th class="border p-2">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for static_content in static_contents %}
+                <tr>
+                    <td class="border p-2">{{ static_content.section }}</td>
+                    <td class="border p-2">{{ static_content.page }}</td>
+                    <td class="border p-2">{{ static_content.content }}</td>
+                    <td class="border p-2">
+                        <a href="{{ path('app_static_content_edit', {'id': static_content.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Pas de texte </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 
 {% endblock %}

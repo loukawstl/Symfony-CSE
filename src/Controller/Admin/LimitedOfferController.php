@@ -99,8 +99,7 @@ class LimitedOfferController extends AbstractController
     #[Route('/OffreLimités/Modification/{id}', name: 'app_limited_offer_modify', methods: ['GET', 'POST'])]
     public function modify(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
     {
-        $errorManager = "";
-        
+
         if ((null === $offer)||($offer->getTypeOfOffer() != "limité")) {
             return $this->render('admin/limitedOffer/index.html.twig', [
             ]);
@@ -171,7 +170,6 @@ class LimitedOfferController extends AbstractController
 
         return $this->render('admin/limitedOffer/modify.html.twig', [
             'form' => $form->createView(),
-            'errorManager' => $errorManager,
             'offer' => $offer,
         ]);
         

@@ -3,36 +3,35 @@
 {% block title %}Partnership index{% endblock %}
 
 {% block body %}
-    <h1 class="flex justify-center text-2xl my-5"><b>Liste des partenaires</b></h1>
-    <a class="flex justify-center bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min" href="{{ path('app_partnership_new') }}">Ajouter</a>
-    <table class="table mx-40 my-28">
-        <thead class="">
-            <tr class="border ">
-                <th class="border p-2">Id</th>
-                <th class="border p-2">Nom</th>
-                <th class="border p-2">Texte</th>
-                <th class="border p-2">Lien</th>
-                <th class="border p-2">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for partnership in partnerships %}
-            <tr>
-                <td class="border p-2">{{ partnership.id }}</td>
-                <td class="border p-2">{{ partnership.name }}</td>
-                <td class="border p-2">{{ partnership.text }}</td>
-                <td class="border p-2">{{ partnership.linkToWebsite }}</td>
-                <td class="border p-2">
-                    <a href="{{ path('app_partnership_edit', {'id': partnership.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Pas de partenaire </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<a class="flex justify-center bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min" href="{{ path('app_partnership_new') }}">Ajouter</a>
+    <div class="flex justify-center my-24 border mx-96 p-10 rounded-lg shadow-lg">  
+        <table>
+            <thead>
+                <tr class="border ">
+                    <th class="border p-2">Nom</th>
+                    <th class="border p-2">Texte</th>
+                    <th class="border p-2">Lien</th>
+                    <th class="border p-2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for partnership in partnerships %}
+                <tr>
+                    <td class="border p-2">{{ partnership.name }}</td>
+                    <td class="border p-2">{{ partnership.text }}</td>
+                    <td class="border p-2">{{ partnership.linkToWebsite }}</td>
+                    <td class="border p-3">
+                        <a class="bg-blue-900 text-white p-2 rounded-xl hover:bg-blue-600"href="{{ path('app_partnership_edit', {'id': partnership.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Pas de partenaire </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 
 

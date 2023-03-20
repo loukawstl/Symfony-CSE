@@ -1,19 +1,21 @@
-<div class="flex justify-center my-20 w-full">
-    {{ form_start(form) }}
-        <div>
-            {{ form_label(form.section)}}
-            {{ form_widget(form.section, {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12'}}) }}
-        </div>
-        <div>
-            {{ form_label(form.page)}}
-            {{ form_widget(form.page , {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12'}}) }}
-        </div>
-        <div>
-            {{ form_label(form.content)}}
-            {{ form_widget(form.content , {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12 pb-10'}}) }}
-        </div>
-        <button class=" inline-flex justify-center bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min">{{ button_label|default('Modifier') }}</button>
-        <a class="inline-flex"href="{{ path('app_static_content_index') }}">Retour</a>
-    
-    {{ form_end(form) }}
+<div class="flex justify-center my-24 border mx-96 p-10 rounded-lg shadow-lg">
+    <div class="flex justify-center ">
+        {{ form_start(form) }}
+            <div>
+                {{ form_label(form.section)}}
+                {{ form_widget(form.section, {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12'}}) }}
+            </div>
+            <div>
+                {{ form_label(form.page)}}
+                {{ form_widget(form.page , {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12'}}) }}
+            </div>
+            <div>
+                {{ form_label(form.content)}}
+                {{ form_widget(form.content , {'attr':{'class': 'rounded-lg border p-1.5 mx-20 w-10/12 pb-10'}}) }}
+            </div>
+            <button class=" inline-flex justify-center bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min">{{ button_label|default('Ajouter') }}</button>
+            <a class="inline-flex"href="{{ path('app_static_content_index') }}">Retour</a>
+        
+        {{ form_end(form) }}
+    </div>
 </div>
