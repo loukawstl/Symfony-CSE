@@ -102,7 +102,7 @@ class LimitedOfferController extends AbstractController
         $errorManager = "";
         
         if ((null === $offer)||($offer->getTypeOfOffer() != "limité")) {
-            return $this->render('admin/limitedOffer/index.html.twig', [
+            return $this->redirectToRoute('app_limited_offer_modify', [
             ]);
         }
 
