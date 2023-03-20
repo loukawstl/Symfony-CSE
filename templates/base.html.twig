@@ -17,8 +17,12 @@
     <body class=" bg-white">
         {% block navbar %}
             {% include 'header/header.html.twig' %}
-
         {% endblock %}
+
+        {% block sidenav_left %}
+            {{ render(controller('App\\Controller\\sidenavPartnershipController::showRandomPartnerships')) }}
+        {% endblock %}
+
         {% block body %}
 
         {% endblock %}

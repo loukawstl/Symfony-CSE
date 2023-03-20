@@ -63,4 +63,14 @@ class PartnershipRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findRandomPartnerships(int $nb){
+        return $this->createQuerybuilder('p')
+            ->orderBy('RAND()')
+            ->setMaxResults($nb)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }
