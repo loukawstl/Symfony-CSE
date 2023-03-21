@@ -72,24 +72,26 @@ class PartnershipRepository extends ServiceEntityRepository
             ->getResult()
         ;
 
+        $nbPartnerships = $queryResult[0]["nbPartnerships"];
         $i = 0;
         $partnerships = [];
         $partnershipIds = [];
 
         while($i < $nb){
-            $randomOffset = rand(0, $queryResult[0]["nbPartnerships"]-(1+$i));
+            if ($nbPartnerships > 0){
+                $randomOffset = rand(0, $nbPartnerships - (1 + $i));
 
-            $queryBuilder = $this->createQueryBuilder('p');
-            if ($i !== 0){
-                $queryBuilder->where($queryBuilder->expr()->notIn('p.id', $partnershipIds));
+                $queryBuilder = $this->createQueryBuilder('p');
+                if ($i !== 0){
+                    $queryBuilder->where($queryBuilder->expr()->notIn('p.id', $partnershipIds));
+                }
+                $queryBuilder->setMaxResults(1)->setFirstResult($randomOffset);
+
+                $partnership = $queryBuilder->getQuery()->getOneOrNullResult();
+                $partnerships[] = $partnership;
+                $partnershipIds[] = $partnership->getId();
+                $i++;
             }
-            $queryBuilder->setMaxResults(1)->setFirstResult($randomOffset);
-
-            $partnership = $queryBuilder->getQuery()->getOneOrNullResult();
-            $partnerships[] = $partnership;
-            $partnershipIds[] = $partnership->getId();
-            $i++;
-
         }
 
         return $partnerships;

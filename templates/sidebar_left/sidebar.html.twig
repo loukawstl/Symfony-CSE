@@ -17,13 +17,13 @@
     <div>
         <h3 class="text-yellow-800 text-lg mb-1">Nos Partenaires</h3>
         
-        <div class="slider">
+        <div class="slider relative overflow-hidden">
              {% if partnerships is not empty %}
                 <!--partie principale du carousel-->
-                <div class="slider-inner">
+                <div class="slider-inner flex flex-row flex-nowrap relative right-0 py-2 transition-right duration-500">
                     {% for partnership in partnerships %}
-                        <div class="slider-item">
-                        <a class="box" href="{{ partnership.linkToWebsite }}">
+                        <div class="slider-item flex-1 flex-shrink-0 block">
+                        <a class="box shadow-md flex flex-row items-center justify-center text-white bg-black mr-10 ml-10 rounded-lg" href="{{ partnership.linkToWebsite }}">
                             {% if partnership.file.filePath is defined %}
                                 <img src="{{ partnership.file.filePath }}">
                             {% endif %}
@@ -33,9 +33,9 @@
                 </div>
                 
                 <!--controls du carousel-->
-                <div class="control">
-                    <button id="prev"><span>&ltrif;</span></button>
-                    <button id="next"><span>&rtrif;</span></button>
+                <div class="control flex absolute justify-between left-5 right-5 top-42%">
+                    <button id="prev" class="outline-none bg-transparent text-3xl border-0"><span>&ltrif;</span></button>
+                    <button id="next" class="outline-none bg-transparent text-3xl border-0"><span>&rtrif;</span></button>
                 </div>
             
             </div>
