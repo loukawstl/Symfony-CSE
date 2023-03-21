@@ -22,7 +22,7 @@ class Partnership
     #[ORM\Column(length: 255)]
     private ?string $linkToWebsite = null;
 
-    #[ORM\OneToOne(inversedBy: 'partnership', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'partnership', cascade: ['persist', 'remove'], fetch: "EAGER")]
     private ?File $file = null;
 
     public function getId(): ?int

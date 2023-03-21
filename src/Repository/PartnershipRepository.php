@@ -66,26 +66,33 @@ class PartnershipRepository extends ServiceEntityRepository
 
     public function findRandomPartnerships(int $nb): array {
 
-        $nbPartnerships = $this->createQueryBuilder('p')
-            ->select('COUNT(p.id')
+        $queryResult = $this->createQueryBuilder('p')
+            ->select('COUNT(p.id) AS nbPartnerships')
             ->getQuery()
             ->getResult()
         ;
 
         $i = 0;
         $partnerships = [];
-        while($i < $nb){
-            $randomOffset = rand(0, $nbPartnerships);
-            $partnership = $this->createQueryBuilder('p')
-            ->orderBy('RAND()')
-            ->setMaxResults(1)
-            ->setFirstResult($randomOffset)
-            ->getQuery()
-            ->getResult()
-        ;
+        $partnershipIds = [];
 
-        $partnerships[] = 
+        while($i < $nb){
+            $randomOffset = rand(0, $queryResult[0]["nbPartnerships"]-(1+$i));
+
+            $queryBuilder = $this->createQueryBuilder('p');
+            if ($i !== 0){
+                $queryBuilder->where($queryBuilder->expr()->notIn('p.id', $partnershipIds));
+            }
+            $queryBuilder->setMaxResults(1)->setFirstResult($randomOffset);
+
+            $partnership = $queryBuilder->getQuery()->getOneOrNullResult();
+            $partnerships[] = $partnership;
+            $partnershipIds[] = $partnership->getId();
+            $i++;
+
         }
+
+        return $partnerships;
     }
 
 }
