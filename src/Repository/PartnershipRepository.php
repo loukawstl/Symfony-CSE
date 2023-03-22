@@ -78,7 +78,7 @@ class PartnershipRepository extends ServiceEntityRepository
         $partnershipIds = [];
 
         while($i < $nb){
-            if ($nbPartnerships > 0){
+            if ($i < $nbPartnerships){
                 $randomOffset = rand(0, $nbPartnerships - (1 + $i));
 
                 $queryBuilder = $this->createQueryBuilder('p');

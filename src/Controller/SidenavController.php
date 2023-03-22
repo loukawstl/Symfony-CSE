@@ -27,7 +27,7 @@ class SidenavController extends AbstractController
     public function showRandomPartnerships($nb = 3): Response
     {
         $partnerships = $this->partnershipRepository->findRandomPartnerships($nb);
-        
+
         return $this->render('sidebar_left/sidebar.html.twig', [
             'partnerships' => $partnerships 
         ]);

@@ -19,6 +19,10 @@ module.exports = {
           'footerbg': '#B6A886',
           'modalbg': 'rgba(0,0,0,0.4)',
         },
+        //used in sidebar
+        spacing: {
+          '18': '4.5rem',
+        },
       }
     },
     plugins: [],
