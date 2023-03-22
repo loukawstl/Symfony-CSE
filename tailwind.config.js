@@ -8,6 +8,8 @@ module.exports = {
       //used in Form/Admin/LimitedOfferType
       'bg-blue-900',
       'hover:bg-blue-600',
+      //used in public/js/carouselPartnerships.js
+      'bg-gray-600',
     ],
     theme: {
       extend: {
@@ -18,10 +20,6 @@ module.exports = {
           'activebg': '#B6A886',
           'footerbg': '#B6A886',
           'modalbg': 'rgba(0,0,0,0.4)',
-        },
-        //used in sidebar
-        spacing: {
-          '18': '4.5rem',
         },
       }
     },

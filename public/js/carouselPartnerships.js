@@ -1,5 +1,4 @@
 var $ = document;
-console.log("quoicoubeh")
 $.addEventListener('DOMContentLoaded', function() {
 
   const sliderMe = () => {
@@ -40,41 +39,27 @@ $.addEventListener('DOMContentLoaded', function() {
           control.changeHighlight();
         },
 
-        //chaque pslide récupère la balise dont l'id lui correspond
+        //chaque pitem récupère la balise dont l'id lui correspond
         //slide1 définit slideInner.style.right à 0 (position du premier slide)
         //chaque fonction slide définit ensuite slideInner.style.right à la longueur d'un slide*n, avec n = le numéro du slide voulu-1
 
-        pslide1: $.querySelector('#pslide1'),
+        pitem1: $.querySelector('#pitem1'),
         slide1() {
           currentPosition = 0;
           sliderInner.style.right = currentPosition;
           control.changeHighlight();
         },
 
-        pslide2: $.querySelector('#pslide2'),
+        pitem2: $.querySelector('#pitem2'),
         slide2() {
             currentPosition = parseFloat(sliderItemWidth);
             sliderInner.style.right = currentPosition + '%';
             control.changeHighlight();
         },
 
-        pslide3: $.querySelector('#pslide3'),
+        pitem3: $.querySelector('#pitem3'),
         slide3() {
             currentPosition = parseFloat(sliderItemWidth)*2;
-            sliderInner.style.right = currentPosition + '%';
-            control.changeHighlight()
-        },
-
-        pslide4: $.querySelector('#pslide4'),
-        slide4() {
-            currentPosition = parseFloat(sliderItemWidth)*3;
-            sliderInner.style.right = currentPosition + '%';
-            control.changeHighlight()
-        },
-
-        pslide5: $.querySelector('#pslide5'),
-        slide5() {
-            currentPosition = parseFloat(sliderItemWidth)*4;
             sliderInner.style.right = currentPosition + '%';
             control.changeHighlight()
         },
@@ -83,39 +68,28 @@ $.addEventListener('DOMContentLoaded', function() {
           //change l'opacité des éléments du menu lattéral en fonction de currentPosition
           switch (currentPosition) {
             case 0:
-              pslide1.style.opacity = "1";
-              pslide2.style.opacity = "0.5";
-              pslide3.style.opacity = "0.5";
-              pslide4.style.opacity = "0.5";
-              pslide5.style.opacity = "0.5";
+              pitem1.classList.remove('bg-gray-400');
+              pitem1.classList.add('bg-gray-600');
+              pitem2.classList.remove('bg-gray-600');
+              pitem2.classList.add('bg-gray-400');
+              pitem3.classList.remove('bg-gray-600');
+              pitem3.classList.add('bg-gray-400');
               break;
             case 100:
-              pslide1.style.opacity = "0.5";
-              pslide2.style.opacity = "1";
-              pslide3.style.opacity = "0.5";
-              pslide4.style.opacity = "0.5";
-              pslide5.style.opacity = "0.5";
+              pitem1.classList.remove('bg-gray-600');
+              pitem1.classList.add('bg-gray-400');
+              pitem2.classList.remove('bg-gray-400');
+              pitem2.classList.add('bg-gray-600');
+              pitem3.classList.remove('bg-gray-600');
+              pitem3.classList.add('bg-gray-400');
               break;
             case 200:
-              pslide1.style.opacity = "0.5";
-              pslide2.style.opacity = "0.5";
-              pslide3.style.opacity = "1";
-              pslide4.style.opacity = "0.5";
-              pslide5.style.opacity = "0.5";
-              break;
-            case 300:
-              pslide1.style.opacity = "0.5";
-              pslide2.style.opacity = "0.5";
-              pslide3.style.opacity = "0.5";
-              pslide4.style.opacity = "1";
-              pslide5.style.opacity = "0.5";
-              break;
-            case 400:
-              pslide1.style.opacity = "0.5";
-              pslide2.style.opacity = "0.5";
-              pslide3.style.opacity = "0.5";
-              pslide4.style.opacity = "0.5";
-              pslide5.style.opacity = "1";
+              pitem1.classList.remove('bg-gray-600');
+              pitem1.classList.add('bg-gray-400');
+              pitem2.classList.remove('bg-gray-600');
+              pitem2.classList.add('bg-gray-400');
+              pitem3.classList.remove('bg-gray-400');
+              pitem3.classList.add('bg-gray-600');
               break;
             default:
               console.log("error");
@@ -130,11 +104,9 @@ $.addEventListener('DOMContentLoaded', function() {
     //addEventListener permet d'executer une fonction en fonction d'un evenement, ici un clique sur un des controls
     control.next.addEventListener('click', control.slideNext)
     control.prev.addEventListener('click', control.slidePrev)
-    control.pslide1.addEventListener('click', control.slide1)
-    control.pslide2.addEventListener('click', control.slide2)
-    control.pslide3.addEventListener('click', control.slide3)
-    control.pslide4.addEventListener('click', control.slide4)
-    control.pslide5.addEventListener('click', control.slide5)
+    control.pitem1.addEventListener('click', control.slide1)
+    control.pitem2.addEventListener('click', control.slide2)
+    control.pitem3.addEventListener('click', control.slide3)
 
 
     oldPosition = 0;
@@ -148,17 +120,8 @@ $.addEventListener('DOMContentLoaded', function() {
 
     //highlight le premier élément au chargement de la page
     control.changeHighlight();
-   
 
-
-    //pour eviter des problèmes d'affichage le carousel retourne au premier slide quand la fenêtre change de taille
-    window.addEventListener("resize",function(){
-      currentPosition = 0;
-      $.querySelector('.slider-inner').style.right = currentPosition + '%';
-    })
   }
   sliderMe();
-
-  window.addEventListener("resize", sliderMe)
 
 });
