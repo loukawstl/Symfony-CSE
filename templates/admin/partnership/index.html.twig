@@ -3,11 +3,14 @@
 {% block title %}Partnership index{% endblock %}
 
 {% block body %}
-<a class="flex justify-center bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min" href="{{ path('app_partnership_new') }}">Ajouter</a>
-    <div class="flex justify-center my-24 border mx-96 p-10 rounded-lg shadow-lg">  
+    <div class="my-24 mx-52 border ml p-10 rounded-lg shadow-lg">  
+        <div class="flex justify-between mb-4">
+            <h1 class="font-bold mt-2"> Administration Partenaires </h1>
+            <a class="bg-green-800 text-white p-3 rounded-lg hover:bg-green-600" href=" {{ path('app_partnership_new') }}"> Ajouter </a>
+        </div>
         <table>
             <thead>
-                <tr class="border ">
+                <tr class="border">
                     <th class="border p-2">Nom</th>
                     <th class="border p-2">Texte</th>
                     <th class="border p-2">Lien</th>
@@ -21,7 +24,7 @@
                     <td class="border p-2">{{ partnership.text }}</td>
                     <td class="border p-2">{{ partnership.linkToWebsite }}</td>
                     <td class="border p-3">
-                        <a class="bg-blue-900 text-white p-2 rounded-xl hover:bg-blue-600"href="{{ path('app_partnership_edit', {'id': partnership.id}) }}">Modifier</a>
+                        <a class="bg-blue-900 text-white p-2 rounded-xl hover:bg-blue-600"href="{{ path('app_partnership_edit', {'id': partnership.id}) }}">Afficher</a>
                     </td>
                 </tr>
             {% else %}

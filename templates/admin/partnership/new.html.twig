@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="my-24 mx-52 border ml px-32 rounded-lg shadow-lg">
+        <h1 class="font-bold mt-2 text-center"> Administration Partenaires </h1> 
+        {% if errorManager is defined %}
+            <div class="text-red-600"> {{ errorManager | raw }} </div>
+        {% endif %}   
+        {{ form_start(form) }}
+            <div class="mt-6">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.name) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.text) }}
+                {{ form_widget(form.text, {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.text) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.linkToWebsite) }}
+                {{ form_widget(form.linkToWebsite , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.linkToWebsite) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.file) }}
+                {{ form_widget(form.file , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.file) }}
+            </div>
+
+            <div class="buttons flex mt-8 mb-8 justify-between">   
+                <a class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_partnership_index') }}">Annuler</a>
+                {{ form_widget(form.submit) }}
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

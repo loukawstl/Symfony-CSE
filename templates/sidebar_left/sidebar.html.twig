@@ -1,5 +1,5 @@
 <div class="float-left p-20 max-w-sm flex flex-col gap-8">
-<div>
+    <div>
         <div class="bg-blueHome text-white p-4 text-center">
             <h3 >Votre avis compte</h3>
         </div>
@@ -17,11 +17,10 @@
                 {% endif %}
             {% endfor %}
 
-            <form>
+            <form action ="{{ path('app_send_form') }}" method="post">
                 <ul>
                     {% for surveyoption in surveyoptions %}
-                        {% for survey in surveys %}
-                            {% if survey.id == highest_id %}
+                            {% if surveyoption.survey.id == highest_id %}
                                 <li>
                                     <label>
                                         <input class="float-left" type="radio" name="surveyOption" value="{{ surveyoption.id }}">
@@ -29,7 +28,6 @@
                                     </label>
                                 </li>
                             {% endif %}
-                        {% endfor %}
                     {% endfor %}
                 </ul>
             </form>
@@ -37,7 +35,7 @@
         </div>
         <div class="bg-blueHome p-4">
             <button class="bg-white border border-black p-1">Voir les réponses</button>
-            <button class="bg-white border border-black p-1">Valider</button>
+            <button type="submit" class="bg-white border border-black p-1">Valider</button>
         </div>
     </div>
     <div>
