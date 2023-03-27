@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OfferRepository::class)]
+#[ORM\HasLifecycleCallbacks()]
 class Offer
 {
     #[ORM\Id]
@@ -27,6 +28,9 @@ class Offer
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateEnd = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $publishedAt = null;
 
     #[ORM\Column]
     private ?string $tariff = null;
@@ -97,6 +101,19 @@ class Offer
     public function setDateEnd(\DateTimeInterface $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    public function getPublishedAt(): ?\DateTimeInterface
+    {
+        return $this->publishedAt;
+    }
+
+    #[ORM\PrePersist]
+    public function setPublishedAt(): self
+    {
+        $this->publishedAt = new \DateTime();
 
         return $this;
     }

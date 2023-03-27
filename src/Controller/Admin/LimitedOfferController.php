@@ -35,6 +35,8 @@ class LimitedOfferController extends AbstractController
     public function create(Request $request, EntityManagerInterface $manager): Response
     {
         $offer = new Offer();
+        $offer->setDateStart(new \DateTime());
+        $offer->setDateEnd(new \DateTime());
         $form = $this->createForm(LimitedOfferType::class, $offer);
         $errorManager = "";
 

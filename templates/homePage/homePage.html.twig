@@ -1,8 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="bg-gray-200	text-center m-10">
+    <div class="bg-gray-300 my-10">
         {{ textHomePage | raw }}
+    </div>
+    <div>
+        <h2 class="text-3xl"> Dernières Offres Ponctuelles </h2>
+        {% for offer in offers %}
+            <div class="bg-gray-200 px-3 py-4 my-5 rounded-md">
+                <div class="header text-sm">
+                    <span class="bg-sky-900 text-white rounded-full px-3 py-1 mr-3"> OFFRE PONCTUELLE </span>
+                    Publié le {{ offer.publishedAt | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }} - Du {{ offer.dateStart.format('Y-m-d H:i:s') }} au {{ offer.dateEnd.format('Y-m-d H:i:s') }}
+                </div>
+                <div class="my-3 mx-1"> {{offer.text | raw }} </div>
+                <div class="my-2 mx-1"> {{offer.tariff | raw }} </div>
+                <button class="float-right float-bottom bg-white rounded-full px-2"> EN SAVOIR PLUS <span class="font-bold"> > </span></button>
+            </div>
+        {% endfor %}
     </div>
 {% dump(offers) %}
 {% endblock %}

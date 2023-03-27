@@ -21,10 +21,15 @@ class homePageController extends AbstractController
         $nbOffers = 3;
         $offers = $offerRepository->findNbLimitedOffers($nbOffers);
         $staticContent = $staticContentRepository->findTextHomePage();
+        $textHomePage = "";
 
+        if ($staticContent !== null){
+            $textHomePage = $staticContent->getContent();
+        }
+        
         return $this->render('homePage/homePage.html.twig', [
             'offers' => $offers,
-            'textHomePage' => $staticContent->getContent(),
+            'textHomePage' => $textHomePage,
         ]);
     } 
 }
