@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/Modal.js') }}"></script>
+{% endblock javascripts %}
+
+{% block body %}
+
+    {{ include('admin/partnership/_modal.html.twig') }}
+
+    <div class="my-24 mx-52 border ml px-32 rounded-lg shadow-lg">
+        <h1 class="font-bold mt-2 text-center"> Administration Partenaires </h1> 
+
+        {% if errorManager is defined %}
+            <div class="text-red-600"> {{ errorManager | raw }} </div>
+        {% endif %}   
+        {% if successMessage is defined %}
+            <div class="text-green-600"> {{ successMessage | raw }} </div>
+        {% endif %}
+          
+        {{ form_start(form) }}
+            <div class="mt-6">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.name) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.text) }}
+                {{ form_widget(form.text, {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.text) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.linkToWebsite) }}
+                {{ form_widget(form.linkToWebsite , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.linkToWebsite) }}
+            </div>
+
+            <div style="display: flex; flex-direction: row; gap : 20px; align-items: center; margin-bottom : 30px">
+                <div class="mt-6">
+                    <h2>Image :</h2>
+                </div>
+                <div class="mt-6">
+                    {{ form_widget(form.file, {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; align-items: center">
+                    {% if app.request.attributes.get('_route') == 'app_partnership_edit' %}
+                        {% for file in partnership.file %}
+                            <img src="{{ asset( file.filePath ) }}" alt=" {{ file.originalName }}" width="500">
+                            <a data-media-id="{{ file.id }}" id="deleteImageButton" class="deleteImageButton bg-red-800 text-white p-3 rounded-xl hover:cursor-pointer hover:bg-red-600">Effacer</a>
+                        {% endfor %}
+                    {% endif %}
+            </div>
+            
+            <div class="flex mt-8 mb-8 justify-between">   
+                <a id="cancelButton" class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_partnership_index') }}">Retour</a>
+                <div class="flex gap-2">
+                    <a id="deleteButton" class="bg-red-800 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-red-600">Supprimer</a>
+                    {{ form_widget(form.submit) }}
+                </div>
+            </div>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
