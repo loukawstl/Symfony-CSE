@@ -17,7 +17,7 @@
                 {% endif %}
             {% endfor %}
 
-            <form>
+            <form action ="{{ path('app_send_form') }}" method="post">
                 <ul>
                     {% for surveyoption in surveyoptions %}
                         {% for survey in surveys %}
@@ -37,7 +37,7 @@
         </div>
         <div class="bg-blueHome p-4">
             <button class="bg-white border border-black p-1">Voir les réponses</button>
-            <button class="bg-white border border-black p-1">Valider</button>
+            <button type="submit" class="bg-white border border-black p-1">Valider</button>
         </div>
     </div>
     <div>

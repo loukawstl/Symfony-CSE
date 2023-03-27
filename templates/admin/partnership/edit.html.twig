@@ -48,10 +48,7 @@
 
             <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; align-items: center">
                     {% if app.request.attributes.get('_route') == 'app_partnership_edit' %}
-                        {% for file in partnership.file %}
-                            <img src="{{ asset( file.filePath ) }}" alt=" {{ file.originalName }}" width="500">
-                            <a data-media-id="{{ file.id }}" id="deleteImageButton" class="deleteImageButton bg-red-800 text-white p-3 rounded-xl hover:cursor-pointer hover:bg-red-600">Effacer</a>
-                        {% endfor %}
+                            <img src="{{ asset( partnership.file.filePath ) }}" alt=" {{ partnership.file.originalName }}" width="500">
                     {% endif %}
             </div>
             

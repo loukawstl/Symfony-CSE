@@ -4,8 +4,10 @@
 
 {% block body %}
     <div class="my-24 mx-52 border ml p-10 rounded-lg shadow-lg">  
-    <a class=" bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min" href="{{ path('app_partnership_new') }}">Ajouter</a>
-    <h1 class="font-bold mt-2 text-center mb-6"> Administration Partenaires </h1> 
+        <div class="flex justify-between mb-4">
+            <h1 class="font-bold mt-2"> Administration Partenaires </h1>
+            <a class="bg-green-800 text-white p-3 rounded-lg hover:bg-green-600" href=" {{ path('app_partnership_new') }}"> Ajouter </a>
+        </div>
         <table>
             <thead>
                 <tr class="border">

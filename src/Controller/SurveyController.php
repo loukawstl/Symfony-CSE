@@ -7,7 +7,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SurveyController extends AbstractController
 {
+    #[Route('/sendform', name: 'app_send_form', methods: ['GET', 'POST'])]
+    public function sendForm(Request $request, $id): Response
+    {
+        
+    }
+
     /**
-     * @Route("/surveys", name="survey_index")
+     * @Route("/confirmation", name="app_confirmation")
      */
+    public function confirmation(): Response
+    {
+        return $this->render('sidebar_left/confirmation.html.twig');
+    }
 }
