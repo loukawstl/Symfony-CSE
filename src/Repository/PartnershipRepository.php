@@ -90,9 +90,16 @@ class PartnershipRepository extends ServiceEntityRepository
                 $partnership = $queryBuilder->getQuery()->getOneOrNullResult();
                 $partnerships[] = $partnership;
                 $partnershipIds[] = $partnership->getId();
-                $i++;
             }
+            $i++;
         }
+        /*$randomOffset = rand(0, $nbPartnerships - (1 + $i));
+
+        $queryBuilder = $this->createQueryBuilder('p');
+        $queryBuilder->setMaxResults(3)->setFirstResult($randomOffset);
+
+        $partnership = $queryBuilder->getQuery()->getResult();
+        $partnerships[] = $partnership;*/
 
         return $partnerships;
     }

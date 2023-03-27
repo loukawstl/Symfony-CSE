@@ -23,9 +23,13 @@
                 <div class="slider-inner flex flex-row flex-nowrap relative right-0 pt-12 px-8 transition-right duration-500">
                     {% for partnership in partnerships %}
                         <div class="slider-item flex-1 basis-full shrink-0 block h-26 mr-16">
-                            <a class="box shadow-md flex flex-row items-center justify-center text-white bg-black rounded-lg w-auto max-h-28" href="{{ partnership.linkToWebsite }}">
+                            {% if partnership.linkToWebsite is not empty %}
+                                <a class="box shadow-md flex relative flex-row items-center justify-center text-white bg-black rounded-lg w-auto max-h-28 z-20" href="{{ partnership.linkToWebsite }}">
+                            {% else %}
+                                <a class="box shadow-md flex relative flex-row items-center justify-center text-white bg-black rounded-lg w-auto max-h-28 z-20" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">
+                            {% endif %}
                                 {% if partnership.file.filePath is defined %}
-                                    <img class="w-full" src="{{ partnership.file.filePath }}">
+                                    <img class="w-full max-h-36" src="{{ partnership.file.filePath }}">
                                 {% endif %}
                             </a>
                         </div>
@@ -33,16 +37,16 @@
                 </div>
                 
                 <!--controls du carousel-->
-                <div class="control flex absolute justify-between inset-x-px top-16">
-                    <button id="prev" class="text-4xl"><span class="text-gray-600">&ltrif;</span></button>
-                    <button id="next" class="text-4xl"><span class="text-gray-600">&rtrif;</span></button>
+                <div class="control flex absolute justify-between inset-x-px top-16 z-10">
+                    <button id="prev" class="text-4xl"><span class="text-gray-600 z-10">&ltrif;</span></button>
+                    <button id="next" class="text-4xl"><span class="text-gray-600 z-10">&rtrif;</span></button>
                 </div>
             
                     <!--preview du carousel-->
                 <div class="preview flex top-50% justify-center pt-2">
                     {% set ind = 1 %}
                     {% for partnership in partnerships %}
-                        <button class="preview-item mx-1 w-3 h-3 hover:bg-gray-600 bg-gray-400 rounded-full" id="pitem{{ ind }}"></button>
+                        <button class="preview-item mx-1 w-3 h-3 hover:bg-gray-600 bg-gray-400 rounded-full z-20" id="pitem{{ ind }}"></button>
                         {% set ind = ind + 1 %}
                     {% endfor %}
                 </div>

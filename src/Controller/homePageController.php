@@ -2,6 +2,7 @@
 namespace App\Controller;
 use App\Entity\Offer;
 use App\Repository\OfferRepository;
+use App\Repository\StaticContent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +19,10 @@ class homePageController extends AbstractController
 
         $nbOffers = 3;
         $offers = $offerRepository->findNbLimitedOffers($nbOffers);
+        // $textHomePage = $offerRepository->findTextHomePage();
 
         return $this->render('homePage/homePage.html.twig', [
-            'limitedOffers' => $limitedOffers,
+            'offers' => $offers,
         ]);
     } 
 }
