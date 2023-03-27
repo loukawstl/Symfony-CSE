@@ -43,10 +43,12 @@ class LimitedOfferType extends AbstractType
                 ],
             ])
             ->add('dateStart', DateTimeType::class, [
+                'widget' => 'single_text',
                 'label' => 'Début de l\'Offre: *',
                 'required' => true,
-                'format' => 'dd/MM/yyyy',
+                'format' => 'dd/MM/yyyy HH:mm',
                 'html5' => false,
+                'view_timezone' => 'Europe/Paris',
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
@@ -66,8 +68,8 @@ class LimitedOfferType extends AbstractType
                     'class' => 'font-bold'
                 ],
             ])
-            ->add('price', MoneyType::class, [
-                'label' => 'Prix: *',
+            ->add('tariff', CKEditorType::class, [
+                'label' => 'Tarif: *',
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(),

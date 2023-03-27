@@ -8,6 +8,8 @@ module.exports = {
       //used in Form/Admin/LimitedOfferType
       'bg-blue-900',
       'hover:bg-blue-600',
+      //used in public/js/carouselPartnerships.js
+      'bg-gray-600',
     ],
     theme: {
       extend: {
