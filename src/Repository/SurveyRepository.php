@@ -63,4 +63,12 @@ class SurveyRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findHighestId(): ?int
+    {
+        $queryBuilder = $this->createQueryBuilder('s');
+        $queryBuilder->select('MAX(s.id)');
+        $query = $queryBuilder->getQuery();
+        $result = $query->getSingleScalarResult();
+        return $result ? (int) $result : null;
+    }
 }

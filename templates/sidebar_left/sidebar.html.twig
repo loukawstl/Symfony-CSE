@@ -1,4 +1,45 @@
 <div class="float-left p-20 max-w-sm flex flex-col gap-8">
+<div>
+        <div class="bg-blueHome text-white p-4 text-center">
+            <h3 >Votre avis compte</h3>
+        </div>
+        <div class="bg-greyHome text-center px-2 py-2">
+            {% set highest_id = 0 %}
+            {% for survey in surveys %}
+                {% if survey.id > highest_id %}
+                    {% set highest_id = survey.id %}
+                {% endif %}
+            {% endfor %}
+
+            {% for survey in surveys %}
+                {% if survey.id == highest_id %}
+                    <p class="text-black text-sm font-bold pb-3">{{ survey.question }}</p>
+                {% endif %}
+            {% endfor %}
+
+            <form>
+                <ul>
+                    {% for surveyoption in surveyoptions %}
+                        {% for survey in surveys %}
+                            {% if survey.id == highest_id %}
+                                <li>
+                                    <label>
+                                        <input class="float-left" type="radio" name="surveyOption" value="{{ surveyoption.id }}">
+                                        {{ surveyoption.label }}
+                                    </label>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </form>
+
+        </div>
+        <div class="bg-blueHome p-4">
+            <button class="bg-white border border-black p-1">Voir les réponses</button>
+            <button class="bg-white border border-black p-1">Valider</button>
+        </div>
+    </div>
     <div>
         <h3 class="text-yellow-800 text-lg mb-1">Accès rapide</h3>
         <ul class="list-none text-sm">

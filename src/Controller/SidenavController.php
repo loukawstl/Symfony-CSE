@@ -4,9 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Partnership;
 use App\Entity\File;
+use App\Entity\Survey;
+use App\Entity\SurveyOption;
 use App\Form\Admin\LimitedOfferType;
 use App\Repository\PartnershipRepository;
 use App\Repository\FileRepository;
+use App\Repository\SurveyOptionRepository;
+use App\Repository\SurveyRepository;
 use Doctrine\DBAL\Exception as DoctrineDBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,19 +22,30 @@ class SidenavController extends AbstractController
 {
 
     private $partnershipRepository;
+    private $surveyRepository;
+    private $surveyOptionRepository;
 
-    public function __construct(PartnershipRepository $partnershipRepository)
+    public function __construct(PartnershipRepository $partnershipRepository, SurveyRepository $surveyRepository, SurveyOptionRepository $surveyOptionRepository)
     {
         $this->partnershipRepository = $partnershipRepository;
+        $this->surveyRepository = $surveyRepository;
+        $this->surveyOptionRepository = $surveyOptionRepository;
     }
     
     public function showRandomPartnerships($nb = 3): Response
     {
         $partnerships = $this->partnershipRepository->findRandomPartnerships($nb);
+        $surveys = $this->surveyRepository->findAll();
+        $surveyoptions = $this->surveyOptionRepository->findAll();
+        $highestIdSurvey = $this->surveyRepository->findHighestId();
 
         return $this->render('sidebar_left/sidebar.html.twig', [
-            'partnerships' => $partnerships 
+            'partnerships' => $partnerships ,
+            'surveys' => $surveys,
+            'surveyoptions' => $surveyoptions,
+            'highestIdSurvey' => $highestIdSurvey,
         ]);
     }
+    
 
 }
