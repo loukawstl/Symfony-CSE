@@ -24,9 +24,9 @@
                     {% for partnership in partnerships %}
                         <div class="slider-item flex-1 basis-full shrink-0 block h-26 mr-16">
                             {% if partnership.linkToWebsite is not empty %}
-                                <a class="box shadow-md flex relative flex-row items-center justify-center text-white bg-black rounded-lg w-auto max-h-28 z-20" href="{{ partnership.linkToWebsite }}">
+                                <a class="box shadow-md flex relative flex-row items-center justify-center text-white bg-black rounded-lg w-auto max-h-28 z-20"  target="_blank" href="{{ partnership.linkToWebsite }}">
                             {% else %}
-                                <a class="box shadow-md flex relative flex-row items-center justify-center text-white bg-black rounded-lg w-auto max-h-28 z-20" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">
+                                <a class="box shadow-md flex relative flex-row items-center justify-center text-white bg-black rounded-lg w-auto max-h-28 z-20"  target="_blank" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">
                             {% endif %}
                                 {% if partnership.file.filePath is defined %}
                                     <img class="w-full max-h-36" src="{{ partnership.file.filePath }}">
