@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\StaticContent;
 use App\Form\StaticContentType;
 use App\Repository\StaticContentRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 #[Route('/TextModif')]
 class StaticContentController extends AbstractController
