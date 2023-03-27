@@ -15,18 +15,22 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body class=" bg-white">
+    <body class="bg-white">
         {% block navbar %}
             {% include 'header/header.html.twig' %}
         {% endblock %}
+        <div class="flex flex-column shrink-0 flex-nowrap mx-10">
+            <div>
+                {% block sidenav_left %}
+                    {{ render(controller('App\\Controller\\sidenavController::showRandomPartnerships')) }}
+                {% endblock %}
+            </div>
+            <div>
+                {% block body %}
 
-        {% block sidenav_left %}
-            {{ render(controller('App\\Controller\\sidenavController::showRandomPartnerships')) }}
-        {% endblock %}
-
-        {% block body %}
-
-        {% endblock %}
+                {% endblock %}
+            </div>
+        </div>
     </body>
     <footer>
         {% block footer %}

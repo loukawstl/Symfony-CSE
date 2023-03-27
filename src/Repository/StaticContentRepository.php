@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\StaticContent;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 
 /**
  * @extends ServiceEntityRepository<StaticContent>
@@ -63,4 +65,18 @@ class StaticContentRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findTextHomePage(): ?staticContent
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.page = :accueil')
+            ->andWhere('s.section = :CSE')
+            ->setParameters(new ArrayCollection([
+                new Parameter('accueil', 'accueil'),
+                new Parameter('CSE', 'CSE'),
+            ]))
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
