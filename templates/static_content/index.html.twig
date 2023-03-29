@@ -3,8 +3,12 @@
 {% block title %}StaticContent index{% endblock %}
 
 {% block body %}
-    <a class="flex justify-center bg-blueHome text-white p-2 rounded-lg border border-slate-300 hover:border-slate-400  max-w-min" href="{{ path('app_static_content_new') }}">Ajouter</a>
-    <div class="flex justify-center my-24 border mx-72 rounded-lg shadow-lg">
+  
+    <div class="my-24 mx-52 border ml p-10 rounded-lg shadow-lg">
+        <div class="flex justify-between mb-4">
+            <h1 class="font-bold mt-2"> Administration Texte </h1>
+            <a class="bg-green-800 text-white p-3 rounded-lg hover:bg-green-600" href=" {{ path('app_static_content_new') }}"> Ajouter </a>
+        </div>
         <table class="table mx-40 my-10">
             <thead class="">
                 <tr class="border ">
