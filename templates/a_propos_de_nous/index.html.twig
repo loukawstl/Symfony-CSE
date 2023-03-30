@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="rounded-xl bg-greyHome p-5 mb-10">
     <h1 class="flex justify-center text-3xl mt-4"><b>A Propos de nous</b></h1>
-        <div class="px-6 py-5">
-            {% for content in content_list %}
-                <div>
-                    {{ content.content | raw }}
-                </div>
-            {% endfor %}
-        </div>
+    <div class="px-6 py-5">
+        {% for content in content_list %}
+            <div>
+                {{ content.content | raw }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
     
 {% endblock %}
