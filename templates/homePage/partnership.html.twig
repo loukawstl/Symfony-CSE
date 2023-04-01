@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class=" font-bold text-center mb-20 text-3xl">Liste des Partenaires</h1>
+    <div class="rounded-xl bg-greyHome w-full pt-10">
+        {% for partnership in partnerships %}
+        <div class="inline-flex">
+            <div class="justify-center w-64 h-40 inline-grid mx-10 mb-10">
+                <a class=" hover:opacity-50 rounded-lg absolute w-64 h-40" href="{{partnership.linkToWebsite}}"><img class=" border-2 border-black rounded-lg absolute w-64 h-40" src="{{partnership.file.filePath}}"></a>
+                <h1 class=" h-10 float-center font-bold text-white opacity-100 z-40 text-center">{{ partnership.name }}</h1>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

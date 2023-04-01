@@ -3,6 +3,7 @@ namespace App\Controller;
 use App\Entity\Offer;
 use App\Entity\StaticContent;
 use App\Repository\OfferRepository;
+use App\Repository\PartnershipRepository;
 use App\Repository\StaticContentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class homePageController extends AbstractController
 {
 
-#[Route('/accueil', name: 'app_home_page', methods: ['GET'])]
+#[Route('/', name: 'app_home_page', methods: ['GET'])]
     public function show(OfferRepository $offerRepository, StaticContentRepository $staticContentRepository): Response
     {
 
@@ -32,4 +33,13 @@ class homePageController extends AbstractController
             'textHomePage' => $textHomePage,
         ]);
     } 
+#[Route('/partenariat', name: 'partnership', methods: ['GET'])]
+    public function index(PartnershipRepository $partnershipRepository): Response
+    {
+        
+        return $this->render('homePage/partnership.html.twig', [
+            'partnerships' => $partnershipRepository->findAll(),
+        ]);
+    }
+
 }
