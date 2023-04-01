@@ -79,6 +79,7 @@ class OfferRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->andWhere('o.typeOfOffer = :type')
             ->setParameter('type', 'limité')
+            ->orderBy('o.publishedAt', 'DESC')
             ->setMaxResults($nb)
             ->getQuery()
             ->getResult()

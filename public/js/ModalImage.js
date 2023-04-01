@@ -14,7 +14,7 @@ addEventListener('load', (event) => {
     // When the user clicks on the button, open the modal
     btns.forEach(function(button) {
         button.addEventListener('click', function() {
-            console.log(mediaId = button.dataset.mediaId);
+            mediaId = button.dataset.mediaId;
             mediaIdInput.value = mediaId;
             modal.style.display = "block";
         });

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('js/Modal.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ModalLimitedOffer.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ModalImage.js') }}"></script>
 {% endblock javascripts %}
 
@@ -29,7 +29,7 @@
 
             <div class="mt-6">
                 {{ form_label(form.text) }}
-                {{ form_widget(form.text) }}
+                {{ form_widget(form.text , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
                 {{ form_errors(form.text) }}
             </div>
 

@@ -21,7 +21,13 @@
             {% for partnership in partnerships %}
                 <tr>
                     <td class="border p-2">{{ partnership.name }}</td>
-                    <td class="border p-2">{{ partnership.text }}</td>
+                    <td class="border p-2 max-w-md">
+                        {% if partnership.text|length > 50 %}
+                            {{ partnership.text|slice(0, 50) ~ '...' }}
+                        {% else %}
+                            {{ partnership.text }}
+                        {% endif %}
+                    </td>
                     <td class="border p-2">{{ partnership.linkToWebsite }}</td>
                     <td class="border p-3">
                         <a class="bg-blue-900 text-white p-2 rounded-xl hover:bg-blue-600"href="{{ path('app_partnership_edit', {'id': partnership.id}) }}">Afficher</a>

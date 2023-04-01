@@ -1,22 +1,52 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/ModalHomePage.js') }}"></script>
+{% endblock javascripts %}
+
 {% block body %}
-    <div class="bg-gray-300 my-10">
+    {{ include('homePage/_modal.html.twig') }}
+    <div class="bg-gray-300 my-10 max-w-4xl rounded-md">
         {{ textHomePage | raw }}
     </div>
-    <div>
+    <div class="mb-28">
         <h2 class="text-3xl"> Dernières Offres Ponctuelles </h2>
         {% for offer in offers %}
-            <div class="bg-gray-200 px-3 py-4 my-5 rounded-md">
+            <div class="bg-gray-200 pl-3 pr-7 py-4 my-5 rounded-md max-w-4xl">
                 <div class="header text-sm">
                     <span class="bg-sky-900 text-white rounded-full px-3 py-1 mr-3"> OFFRE PONCTUELLE </span>
-                    Publié le {{ offer.publishedAt | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }} - Du {{ offer.dateStart.format('Y-m-d H:i:s') }} au {{ offer.dateEnd.format('Y-m-d H:i:s') }}
+                    Publié le {{ offer.publishedAt | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }} - 
+                    Disponible du {{ offer.dateStart.format('d-m-Y') }} à {{ offer.dateStart.format('H:i') }} au {{ offer.dateEnd.format('d-m-Y') }} à  {{ offer.dateEnd.format('H:i') }}
                 </div>
-                <div class="my-3 mx-1"> {{offer.text | raw }} </div>
-                <div class="my-2 mx-1"> {{offer.tariff | raw }} </div>
-                <button class="float-right float-bottom bg-white rounded-full px-2"> EN SAVOIR PLUS <span class="font-bold"> > </span></button>
-            </div>
+                <div class="my-4 mx-1 max-w-3xl">
+                    {% if offer.text|length > 300 %}
+                        {{ offer.text|slice(0, 300) ~ '...' }}
+                    {% else %}
+                        {{ offer.text }}
+                    {% endif %}
+                 </div>
+                <div class="my-8 mx-1 max-w-3xl"> 
+                    {% if offer.tariff|length > 300 %}
+                        {{ offer.tariff|slice(0, 300) ~ '...' }}
+                    {% else %}
+                        {{ offer.tariff }}
+                    {% endif %}
+                </div>
+                <button class="modalButton relative float-right bottom-5 rounded-full px-2 hover:underline"
+                    data-name="{{ offer.name }}" 
+                    data-text="{{ offer.text }}" 
+                    data-datestart="{{ offer.dateStart | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}" 
+                    data-hourstart="{{ offer.dateStart.format('H:i') }}" 
+                    data-dateend="{{ offer.dateEnd | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}" 
+                    data-hourend="{{ offer.dateEnd.format('H:i') }}" 
+                    data-publishedatdate="{{ offer.publishedAt | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}" 
+                    data-publishedathour="{{ offer.publishedAt.format('H:i') }}" 
+                    data-tariff="{{ offer.Tariff }}" 
+                    data-nbminimumplaces="{{ offer.nbMinimumPlaces }}"
+                >
+                    EN SAVOIR PLUS <span class="font-bold"> > </span></button>
+                </div>
         {% endfor %}
     </div>
-{% dump(offers) %}
+    
 {% endblock %}

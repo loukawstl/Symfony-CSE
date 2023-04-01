@@ -1,0 +1,20 @@
+{% block content %}
+
+    <div class="modal hidden fixed z-40 left-0 top-0 w-screen h-screen overflow-auto bg-modalbg">
+        <div class="flex justify-center">
+            <div class="bg-white m-8 p-8 border-2 border-slate-200 w-4/12 rounded-xl">
+                <span class="close text-gray-700 float-right font-bold text-2xl hover:text-black hover:cursor-pointer">&times;</span>
+                <p class='text-xl font-bold'>Confirmer la suppression de l'offre :</p>
+                <form action ="{{ path('app_limited_offer_delete', {'id': app.request.get('id')}) }}" method="post">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="token" value="{{ csrf_token('delete-offer') }}" />
+                    <div class="mt-4">
+                        <a  class="btnClose bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300">Annuler</a>
+                        <button type="submit" name="delete" class="bg-red-800 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-red-600">Supprimer</button> 
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

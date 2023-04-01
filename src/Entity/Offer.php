@@ -17,10 +17,10 @@ class Offer
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 75)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(length: 1000)]
     private ?string $text = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -32,7 +32,7 @@ class Offer
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $publishedAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(length: 1000)]
     private ?string $tariff = null;
 
     #[ORM\Column(length: 255)]

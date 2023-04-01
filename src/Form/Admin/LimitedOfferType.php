@@ -13,9 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class LimitedOfferType extends AbstractType
 {
@@ -32,7 +32,7 @@ class LimitedOfferType extends AbstractType
                     'class' => 'font-bold'
                 ],
             ])
-            ->add('text', CKEditorType::class, [
+            ->add('text', textAreaType::class, [
                 'label' => 'Texte: *',
                 'required' => false,
                 'constraints' => [
@@ -40,6 +40,9 @@ class LimitedOfferType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'font-bold'
+                ],
+                'attr' => [
+                    'rows' => 5,
                 ],
             ])
             ->add('dateStart', DateTimeType::class, [
@@ -68,7 +71,7 @@ class LimitedOfferType extends AbstractType
                     'class' => 'font-bold'
                 ],
             ])
-            ->add('tariff', CKEditorType::class, [
+            ->add('tariff', textAreaType::class, [
                 'label' => 'Tarif: *',
                 'required' => true,
                 'constraints' => [
@@ -76,6 +79,9 @@ class LimitedOfferType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'font-bold'
+                ],
+                'attr' => [
+                    'rows' => 5,
                 ],
             ])
             ->add('nbMinimumPlaces', IntegerType::class, [

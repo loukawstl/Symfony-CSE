@@ -10,9 +10,8 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr class="bg-white border-b ">
                     <th class="px-6 py-4"> Nom </th>
-                    <th class="px-6 py-4"> Date début </th>
+                    <th class="px-6 py-4 w-32"> Date début </th>
                     <th class="px-6 py-4"> Date fin </th>
-                    <th class="px-6 py-4"> Tarif </th>
                     <th class="px-6 py-4"> Nombre minimum de Places </th>
                     <th class="px-6 py-4"> Numéro de Page </th>
                     <th class="px-6 py-4"> Actions </th>
@@ -21,10 +20,9 @@
             <tbody>
                 {% for offer in offers %}
                     <tr class="bg-white border-b text-blue-800">
-                        <td class="px-6 py-4"> {{ offer.name }} </td>
-                        <td class="px-6 py-4"> {{ offer.dateStart.format('Y-m-d H:i:s') }} </td>
-                        <td class="px-6 py-4"> {{ offer.dateEnd.format('Y-m-d H:i:s') }} </td>
-                        <td class="px-6 py-4"> {{ offer.tariff | raw }} </td>
+                        <td class="px-6 py-4 max-w-sm"> {{ offer.name }} </td>
+                        <td class="px-6 py-4 w-32"> Le {{ offer.dateStart.format('d-m-Y') }} à {{ offer.dateStart.format('H:i') }} </td>
+                        <td class="px-6 py-4"> Le {{ offer.dateEnd.format('d-m-Y') }} à {{ offer.dateEnd.format('H:i') }} </td>
                         <td class="px-6 py-4"> {{ offer.nbMinimumPlaces }} </td>
                         <td class="px-6 py-4"> {{ offer.numberOrderPage }} </td>
                         <td class="px-4 py-4"> <a class= "bg-blue-900 text-white p-3 rounded-xl hover:bg-blue-600" href=" {{ path('app_limited_offer_modify', {'id': offer.id }) }}"> Afficher </a> </td>

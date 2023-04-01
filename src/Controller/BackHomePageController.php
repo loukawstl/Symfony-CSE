@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class BackHomePageController extends AbstractController
 {
     #[Route('/back/listeHomepage', name: 'ListeHomepage')]
