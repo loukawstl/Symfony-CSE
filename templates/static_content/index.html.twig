@@ -23,7 +23,7 @@
                 <tr>
                     <td class="border p-2">{{ static_content.section }}</td>
                     <td class="border p-2">{{ static_content.page }}</td>
-                    <td class="border p-2">{{ static_content.content | raw }}</td>
+                    <td class="border p-2">{{ static_content.content|raw }}</td>
                     <td class="border p-2">
                         <a href="{{ path('app_static_content_edit', {'id': static_content.id}) }}">Modifier</a>
                     </td>
