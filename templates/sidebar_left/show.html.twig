@@ -19,7 +19,7 @@
 
             <form action ="{{ path('app_send_form') }}" method="post">
                 <ul>
-                    {% for surveryOption in surveyOptions %}
+                    {% for surveyOption in surveyOptions %}
                             {% if surveyOption.survey.id == highest_id %}
                                 <li>
                                     <label>
