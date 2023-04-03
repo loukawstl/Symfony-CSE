@@ -16,7 +16,7 @@ use Knp\Component\Pager\PaginatorInterface;
 class HomePageController extends AbstractController
 {
 
-    #[Route('/', name: 'app_home_page', methods: ['GET'])]
+    #[Route('/accueil', name: 'app_home_page', methods: ['GET'])]
     public function homePage(OfferRepository $offerRepository, StaticContentRepository $staticContentRepository, PaginatorInterface $paginator, Request $request): Response
     {
 

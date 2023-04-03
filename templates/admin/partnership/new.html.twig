@@ -4,7 +4,7 @@
     <div class="my-24 mx-52 border ml px-32 rounded-lg shadow-lg">
         <h1 class="font-bold mt-2 text-center"> Administration Partenaires </h1> 
         {% if errorManager is defined %}
-            <div class="text-red-600"> {{ errorManager | raw }} </div>
+            <div class="text-red-600"> {{ errorManager|raw }} </div>
         {% endif %}   
         {{ form_start(form) }}
             <div class="mt-6">
