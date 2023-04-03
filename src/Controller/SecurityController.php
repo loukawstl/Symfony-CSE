@@ -18,7 +18,7 @@ class SecurityController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/Login', name: 'login')]
+    #[Route('/login', name: 'login')]
     public function login(Request $request)
     {
         $form = $this->createForm(LoginType::class);

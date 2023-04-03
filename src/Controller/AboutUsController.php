@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AboutUsController extends AbstractController
 {
 
-    #[Route('/AProposDeNous', name: 'app_a_propos', methods: ['GET'])]
+    #[Route('/a-propos', name: 'app_a_propos', methods: ['GET'])]
     public function show(StaticContentRepository $staticContentRepository): Response
     {
         return $this->render('a_propos_de_nous/show.html.twig', [

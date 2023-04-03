@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/Admin/GestionOffresLimités')]
+#[Route('/admin/gestion-offres-limités')]
 class LimitedOfferController extends AbstractController
 {
 
@@ -32,7 +32,7 @@ class LimitedOfferController extends AbstractController
         ]);
     }
 
-    #[Route('/Ajouter', name: 'app_limited_offer_create', methods: ['GET', 'POST'])]
+    #[Route('/ajouter', name: 'app_limited_offer_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $offer = new Offer();
@@ -99,7 +99,7 @@ class LimitedOfferController extends AbstractController
         ]);
     }
 
-    #[Route('/Modifier/{id}', name: 'app_limited_offer_modify', methods: ['GET', 'POST'])]
+    #[Route('/modifier/{id}', name: 'app_limited_offer_modify', methods: ['GET', 'POST'])]
     public function edit(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
     {
 
@@ -178,7 +178,7 @@ class LimitedOfferController extends AbstractController
         
     }
 
-    #[Route('/Modifier/{id}', name: 'app_limited_offer_delete', methods: ['DELETE'])]
+    #[Route('/modifier/{id}', name: 'app_limited_offer_delete', methods: ['DELETE'])]
     public function delete(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
     {
         
@@ -203,7 +203,7 @@ class LimitedOfferController extends AbstractController
         return $this->redirectToRoute('app_limited_offer_index');
     }
     
-    #[Route('/Modifier/{id}/Supression', name: 'app_limited_offer_image_delete', methods: ['DELETE'])]
+    #[Route('/modifier/{id}/supression', name: 'app_limited_offer_image_delete', methods: ['DELETE'])]
     public function deleteImage(Offer $offer, Request $request, EntityManagerInterface $manager, FileRepository $fileRepository): Response
     {
         $check = true;

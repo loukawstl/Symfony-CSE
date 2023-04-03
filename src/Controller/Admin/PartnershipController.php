@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/Admin/GestionPartenaires')]
+#[Route('/Admin/gestion-partenaires')]
 class PartnershipController extends AbstractController
 {
     #[Route('/', name: 'app_partnership_index', methods: ['GET'])]

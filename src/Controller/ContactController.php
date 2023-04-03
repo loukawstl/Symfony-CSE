@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ContactController extends AbstractController
 {
-    #[Route('/Contact', name: 'app_contact')]
+    #[Route('/contact', name: 'app_contact')]
     public function index(Request $request, EntityManagerInterface $em)
     {
         $contact = new Contact();
