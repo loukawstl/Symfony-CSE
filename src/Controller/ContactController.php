@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ContactController extends AbstractController
 {
-    #[Route('/contact', name: 'contact')]
+    #[Route('/Contact', name: 'app_contact')]
     public function index(Request $request, EntityManagerInterface $em)
     {
         $contact = new Contact();
@@ -30,7 +30,7 @@ class ContactController extends AbstractController
             return $this->redirectToRoute('contact');
         }
 
-        return $this->render('contact/contact.html.twig', [
+        return $this->render('contact/show.html.twig', [
             'form' => $form->createView(),
         ]);
     }

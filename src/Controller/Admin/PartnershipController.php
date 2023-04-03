@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Partnership;
 use App\Entity\File;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/gestionPartenaires')]
+#[Route('/Admin/GestionPartenaires')]
 class PartnershipController extends AbstractController
 {
     #[Route('/', name: 'app_partnership_index', methods: ['GET'])]
@@ -26,7 +26,7 @@ class PartnershipController extends AbstractController
         ]);
     }
 
-    #[Route('/ajouter', name: 'app_partnership_new', methods: ['GET', 'POST'])]
+    #[Route('/Ajouter', name: 'app_partnership_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $partnership = new Partnership();
@@ -69,8 +69,8 @@ class PartnershipController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/modifier', name: 'app_partnership_edit', methods: ['GET', 'POST'])]
-    public function modify(PartnershipRepository $partnershipRepository, Partnership $partnership, EntityManagerInterface $manager, Request $request): Response
+    #[Route('/Modifier/{id}', name: 'app_partnership_edit', methods: ['GET', 'POST'])]
+    public function edit(PartnershipRepository $partnershipRepository, Partnership $partnership, EntityManagerInterface $manager, Request $request): Response
     {
 
         $form = $this->createForm(PartnershipType::class, $partnership, [

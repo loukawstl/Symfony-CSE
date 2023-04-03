@@ -5,7 +5,7 @@
 {% endblock javascripts %}
 
 {% block body %}
-    {{ include('homePage/_modal.html.twig') }}
+    {{ include('home_page/_modal.html.twig') }}
     <div class="bg-gray-300 my-10 max-w-4xl rounded-md">
         {{ textHomePage | raw }}
     </div>
@@ -47,6 +47,9 @@
                     EN SAVOIR PLUS <span class="font-bold"> > </span></button>
                 </div>
         {% endfor %}
+        <div class="text-center">
+            {{ knp_pagination_render(offers) }}
+        </div>
     </div>
     
 {% endblock %}

@@ -14,10 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/Admin/GestionOffresLimités')]
 class LimitedOfferController extends AbstractController
 {
 
-    #[Route('/OffreLimités', name: 'app_limited_offer_index')]
+    #[Route('/', name: 'app_limited_offer_index')]
     public function index(OfferRepository $offerRepository, Request $request): Response
     {
         $offers = $offerRepository->findAllLimitedOffers();
@@ -26,13 +27,13 @@ class LimitedOfferController extends AbstractController
             return $tableManager->prepareData($request);
         }
 
-        return $this->render('Admin/limitedOffer/index.html.twig', [
+        return $this->render('admin/limited_offer/index.html.twig', [
             'offers' => $offers,
         ]);
     }
 
-    #[Route('/OffreLimités/Ajout', name: 'app_limited_offer_create', methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $manager): Response
+    #[Route('/Ajouter', name: 'app_limited_offer_create', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $offer = new Offer();
         $offer->setDateStart(new \DateTime());
@@ -92,14 +93,14 @@ class LimitedOfferController extends AbstractController
             }
         }
 
-        return $this->render('admin/limitedOffer/create.html.twig', [
+        return $this->render('admin/limited_offer/new.html.twig', [
             'form' => $form->createView(),
             'errorManager' => $errorManager,
         ]);
     }
 
-    #[Route('/OffreLimités/Modification/{id}', name: 'app_limited_offer_modify', methods: ['GET', 'POST'])]
-    public function modify(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
+    #[Route('/Modifier/{id}', name: 'app_limited_offer_modify', methods: ['GET', 'POST'])]
+    public function edit(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
     {
 
         if ((null === $offer)||($offer->getTypeOfOffer() != "limité")) {
@@ -161,7 +162,7 @@ class LimitedOfferController extends AbstractController
                     $manager->persist($offer);
                     $manager->flush();
 
-                    return $this->render('admin/limitedOffer/modify.html.twig', [
+                    return $this->render('admin/limited_offer/edit.html.twig', [
                         'form' => $form->createView(),
                         'offer' => $offer,
                         'successMessage' => "L'offre a bien été modifiée"
@@ -170,14 +171,14 @@ class LimitedOfferController extends AbstractController
             }
         }
 
-        return $this->render('admin/limitedOffer/modify.html.twig', [
+        return $this->render('admin/limited_offer/edit.html.twig', [
             'form' => $form->createView(),
             'offer' => $offer,
         ]);
         
     }
 
-    #[Route('/OffreLimités/Modification/{id}', name: 'app_limited_offer_delete', methods: ['DELETE'])]
+    #[Route('/Modifier/{id}', name: 'app_limited_offer_delete', methods: ['DELETE'])]
     public function delete(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
     {
         
@@ -202,7 +203,7 @@ class LimitedOfferController extends AbstractController
         return $this->redirectToRoute('app_limited_offer_index');
     }
     
-    #[Route('/OffreLimités/Modification/{id}/Supression', name: 'app_limited_offer_image_delete', methods: ['DELETE'])]
+    #[Route('/Modifier/{id}/Supression', name: 'app_limited_offer_image_delete', methods: ['DELETE'])]
     public function deleteImage(Offer $offer, Request $request, EntityManagerInterface $manager, FileRepository $fileRepository): Response
     {
         $check = true;

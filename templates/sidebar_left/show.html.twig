@@ -19,12 +19,12 @@
 
             <form action ="{{ path('app_send_form') }}" method="post">
                 <ul>
-                    {% for surveyoption in surveyoptions %}
-                            {% if surveyoption.survey.id == highest_id %}
+                    {% for surveryOption in surveyOptions %}
+                            {% if surveyOption.survey.id == highest_id %}
                                 <li>
                                     <label>
-                                        <input class="float-left" type="radio" name="surveyOption" value="{{ surveyoption.id }}">
-                                        {{ surveyoption.label }}
+                                        <input class="float-left" type="radio" name="surveyOption" value="{{ surveyOption.id }}">
+                                        {{ surveyOption.label }}
                                     </label>
                                 </li>
                             {% endif %}

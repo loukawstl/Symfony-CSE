@@ -21,28 +21,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class SidenavController extends AbstractController
 {
 
-    private $partnershipRepository;
-    private $surveyRepository;
-    private $surveyOptionRepository;
-
-    public function __construct(PartnershipRepository $partnershipRepository, SurveyRepository $surveyRepository, SurveyOptionRepository $surveyOptionRepository)
+    public function __construct(private PartnershipRepository $partnershipRepository, private SurveyRepository $surveyRepository, private SurveyOptionRepository $surveyOptionRepository)
     {
         $this->partnershipRepository = $partnershipRepository;
         $this->surveyRepository = $surveyRepository;
         $this->surveyOptionRepository = $surveyOptionRepository;
     }
     
-    public function showRandomPartnerships($nb = 3): Response
+    public function show($nb = 3): Response
     {
         $partnerships = $this->partnershipRepository->findRandomPartnerships($nb);
         $surveys = $this->surveyRepository->findAll();
-        $surveyoptions = $this->surveyOptionRepository->findAll();
+        $surveyOptions = $this->surveyOptionRepository->findAll();
         $highestIdSurvey = $this->surveyRepository->findHighestId();
 
-        return $this->render('sidebar_left/sidebar.html.twig', [
+        return $this->render('sidebar_left/show.html.twig', [
             'partnerships' => $partnerships ,
             'surveys' => $surveys,
-            'surveyoptions' => $surveyoptions,
+            'surveyOptions' => $surveyOptions,
             'highestIdSurvey' => $highestIdSurvey,
         ]);
     }

@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{{ asset('js/ModalLimitedOffer.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/Modal.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ModalImage.js') }}"></script>
 {% endblock javascripts %}
 
 {% block body %}
 
-    {{ include('admin/limitedOffer/_modal.html.twig') }}
-    {{ include('admin/limitedOffer/_modalImage.html.twig') }}
+    {{ include('admin/limited_offer/_modal.html.twig') }}
+    {{ include('admin/limited_offer/_modalImage.html.twig') }}
 
     <div class="my-24 border mx-96 p-10 rounded-lg shadow-lg">
         <h1 class="font-bold mt-2 text-center"> Administration Offres Limitées </h1> 

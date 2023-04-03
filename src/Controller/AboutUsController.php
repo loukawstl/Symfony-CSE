@@ -8,14 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/a_propos_de_nous', name: 'app_a_propos')]
-class AProposController extends AbstractController
+class AboutUsController extends AbstractController
 {
 
-    #[Route('/', name: 'app_a_propos', methods: ['GET'])]
-    public function aProposDeNous(StaticContentRepository $staticContentRepository): Response
+    #[Route('/AProposDeNous', name: 'app_a_propos', methods: ['GET'])]
+    public function show(StaticContentRepository $staticContentRepository): Response
     {
-        return $this->render('a_propos_de_nous/index.html.twig', [
+        return $this->render('a_propos_de_nous/show.html.twig', [
             'content_list' => $staticContentRepository->findBy(['page' => 'a-propos-de-nous']),
         ]);
     }

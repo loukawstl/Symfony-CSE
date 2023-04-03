@@ -74,13 +74,12 @@ class OfferRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findNbLimitedOffers (int $nb): ?array
+    public function findLimitedOfferByDate (): ?array
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.typeOfOffer = :type')
             ->setParameter('type', 'limité')
             ->orderBy('o.publishedAt', 'DESC')
-            ->setMaxResults($nb)
             ->getQuery()
             ->getResult()
         ;
