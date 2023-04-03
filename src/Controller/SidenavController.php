@@ -47,5 +47,4 @@ class SidenavController extends AbstractController
         ]);
     }
     
-
 }
