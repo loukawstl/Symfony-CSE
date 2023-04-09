@@ -1,0 +1,20 @@
+{% block content %}
+
+    {% for offer in offers %}
+        <div id="modal" class="hidden fixed z-40 left-0 top-0 w-screen h-screen overflow-auto bg-modalbg justify-center items-center">
+            <div class="bg-white m-8 p-8 border-2 border-slate-400 w-5/12 rounded-xl">
+                <span id="close" class="text-gray-700 float-right font-bold text-2xl hover:text-black hover:cursor-pointer">&times;</span>
+                <span id="offerName" class="text-xl font-bold bg-sky-900 text-white rounded-full px-3 py-1 mr-3 mt-1"></span>
+                <div class="border-b border-black mt-2"></div>
+                <div class="mainModal">
+                    <div class="text-sm"> Valable du <span id="offerDateStart"> </span> à <span id="offerHourStart"> </span> au <span id="offerDateEnd"> </span> à <span id="offerHourEnd"> </span></div>
+                    <div class="text-sm"> publié le <span id="offerPublishedAtDate"></span> à <span id="offerPublishedAtHour"></span></div>
+                    <div id="offerText" class="my-10"></div>
+                    <div id="offerTariff" class="my-10"></div>
+                    <div><span class="font-bold"> Nombre Minimum de Places: </span><span id="offerNbMinimumPlaces"></span></div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+        
+{% endblock content %}

@@ -1,5 +1,4 @@
 var $ = document;
-console.log("test");
 $.addEventListener('DOMContentLoaded', function() {
 
   const sliderMe = () => {

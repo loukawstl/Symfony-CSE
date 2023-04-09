@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+
 use App\Entity\Offer;
 use App\Entity\StaticContent;
 use App\Repository\OfferRepository;

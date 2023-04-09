@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="my-24 border mx-96 p-10 rounded-lg shadow-lg">
-        <h1 class="font-bold mt-2 text-center"> Administration Offres Limitées </h1> 
+        <h1 class="font-bold mt-2 text-center"> Administration Offres </h1> 
         {% if errorManager is defined %}
             <div class="text-red-600"> {{ errorManager|raw }} </div>
         {% endif %}   
@@ -48,6 +48,12 @@
                 {{ form_widget(form.numberOrderPage , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
                 {{ form_errors(form.numberOrderPage) }}
             </div>
+
+            <div class="mt-6">
+                {{ form_label(form.typeOfOffer) }}
+                {{ form_widget(form.typeOfOffer , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.typeOfOffer) }}
+            </div>
             
             <div class="mt-6">
                 {{ form_label(form.files) }}
@@ -56,7 +62,7 @@
             </div>
 
             <div class="buttons flex mt-8 mb-8 justify-between">   
-                <a class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_limited_offer_index') }}">Annuler</a>
+                <a class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_offer_index') }}">Annuler</a>
                 {{ form_widget(form.submit) }}
             </div>
 

@@ -16,8 +16,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class LimitedOfferType extends AbstractType
+
+class OfferType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -96,6 +98,20 @@ class LimitedOfferType extends AbstractType
             ])
             ->add('numberOrderPage', IntegerType::class, [
                 'label' => 'Numéro de Page: *',
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                ],
+                'label_attr' => [
+                    'class' => 'font-bold'
+                ],
+            ])
+            ->add('typeOfOffer', ChoiceType::class, [
+                'label' => 'Type d\'Offre: *',
+                'choices'  => [
+                    'limité' => 'limité',
+                    'permanante' => 'permanante',
+                ],
                 'required' => true,
                 'constraints' => [
                     new Assert\NotBlank(),

@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Offer;
 use App\Entity\File;
-use App\Form\Admin\LimitedOfferType;
+use App\Form\Admin\OfferType;
 use App\Repository\OfferRepository;
 use App\Repository\FileRepository;
 use Doctrine\DBAL\Exception as DoctrineDBALException;
@@ -13,32 +13,39 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
-#[Route('/admin/gestion-offres-limités')]
-class LimitedOfferController extends AbstractController
+#[Route('/admin/gestion-offres')]
+class OfferController extends AbstractController
 {
 
-    #[Route('/', name: 'app_limited_offer_index')]
-    public function index(OfferRepository $offerRepository, Request $request): Response
+    #[Route('/', name: 'app_offer_index')]
+    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $offers = $offerRepository->findAllLimitedOffers();
+        $offersRequest = $offerRepository->findAll();
+
+        $offers = $paginator->paginate(
+            $offersRequest,
+            $request->query->getInt('page', 1),
+            10
+        );
 
         if ($request->isXmlHttpRequest()) {
             return $tableManager->prepareData($request);
         }
 
-        return $this->render('admin/limited_offer/index.html.twig', [
+        return $this->render('admin/offer/index.html.twig', [
             'offers' => $offers,
         ]);
     }
 
-    #[Route('/ajouter', name: 'app_limited_offer_create', methods: ['GET', 'POST'])]
+    #[Route('/ajouter', name: 'app_offer_create', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $manager): Response
     {
         $offer = new Offer();
         $offer->setDateStart(new \DateTime());
         $offer->setDateEnd(new \DateTime());
-        $form = $this->createForm(LimitedOfferType::class, $offer);
+        $form = $this->createForm(OfferType::class, $offer);
         $errorManager = "";
 
         $form->handleRequest($request);
@@ -84,31 +91,30 @@ class LimitedOfferController extends AbstractController
                     $offer->addFile($file);
                 }
                 $offer = $form->getData();
-                $offer->setTypeOfOffer("limité");
 
                 $manager->persist($offer);
                 $manager->flush();
 
-                return $this->redirectToRoute('app_limited_offer_index');
+                return $this->redirectToRoute('app_offer_index');
             }
         }
 
-        return $this->render('admin/limited_offer/new.html.twig', [
+        return $this->render('admin/offer/new.html.twig', [
             'form' => $form->createView(),
             'errorManager' => $errorManager,
         ]);
     }
 
-    #[Route('/modifier/{id}', name: 'app_limited_offer_modify', methods: ['GET', 'POST'])]
+    #[Route('/modifier/{id}', name: 'app_offer_modify', methods: ['GET', 'POST'])]
     public function edit(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
     {
 
-        if ((null === $offer)||($offer->getTypeOfOffer() != "limité")) {
-            return $this->redirectToRoute('app_limited_offer_modify', [
+        if (null === $offer) {
+            return $this->redirectToRoute('app_offer_modify', [
             ]);
         }
 
-        $form = $this->createForm(LimitedOfferType::class, $offer, [
+        $form = $this->createForm(OfferType::class, $offer, [
             'on_edit' => true,
         ]);
 
@@ -162,7 +168,7 @@ class LimitedOfferController extends AbstractController
                     $manager->persist($offer);
                     $manager->flush();
 
-                    return $this->render('admin/limited_offer/edit.html.twig', [
+                    return $this->render('admin/offer/edit.html.twig', [
                         'form' => $form->createView(),
                         'offer' => $offer,
                         'successMessage' => "L'offre a bien été modifiée"
@@ -171,14 +177,14 @@ class LimitedOfferController extends AbstractController
             }
         }
 
-        return $this->render('admin/limited_offer/edit.html.twig', [
+        return $this->render('admin/offer/edit.html.twig', [
             'form' => $form->createView(),
             'offer' => $offer,
         ]);
         
     }
 
-    #[Route('/modifier/{id}', name: 'app_limited_offer_delete', methods: ['DELETE'])]
+    #[Route('/modifier/{id}', name: 'app_offer_delete', methods: ['DELETE'])]
     public function delete(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
     {
         
@@ -197,13 +203,13 @@ class LimitedOfferController extends AbstractController
             } catch (DoctrineDBALException $e) {
             }
 
-            return $this->redirectToRoute('app_limited_offer_index');
+            return $this->redirectToRoute('app_offer_index');
         }
 
-        return $this->redirectToRoute('app_limited_offer_index');
+        return $this->redirectToRoute('app_offer_index');
     }
     
-    #[Route('/modifier/{id}/supression', name: 'app_limited_offer_image_delete', methods: ['DELETE'])]
+    #[Route('/modifier/{id}/supression', name: 'app_offer_image_delete', methods: ['DELETE'])]
     public function deleteImage(Offer $offer, Request $request, EntityManagerInterface $manager, FileRepository $fileRepository): Response
     {
         $check = true;
@@ -232,12 +238,12 @@ class LimitedOfferController extends AbstractController
                 $errorManager .= "Erreur lors de la supression de l\'image <br>";
             }
 
-            return $this->redirectToRoute('app_limited_offer_modify', [
+            return $this->redirectToRoute('app_offer_modify', [
                 'id' => $offer->getId(),
             ]);
         }
 
-        return $this->redirectToRoute('app_limited_offer_modify', [
+        return $this->redirectToRoute('app_offer_modify', [
             'id' => $offer->getId(),
             'errorManager' => $errorManager,
         ]);

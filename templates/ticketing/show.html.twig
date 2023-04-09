@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/ModalHomePage.js') }}"></script>
+{% endblock javascripts %}
+
+{% block body %}
+    {{ include('ticketing/_modal.html.twig') }}
+    <div class="mb-28">
+        <h2 class="text-3xl">Billeterie </h2>
+        {% for offer in offers %}
+            <div class="bg-gray-200 pl-3 pr-7 py-4 my-5 rounded-md max-w-4xl">
+                <div class="header text-sm">
+                    <span class="bg-sky-900 text-white rounded-full px-3 py-1 mr-3">
+                        {% if offer.typeOfOffer == "limité" %}
+                            OFFRE PONCTUELLE
+                        {% elseif offer.typeOfOffer == "permanante" %}
+                            OFFRE PERMANANTE 
+                        {% else %}
+                            OFFRE
+                        {% endif %}
+                    </span>
+                    Publié le {{ offer.publishedAt | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }} - 
+                    Disponible du {{ offer.dateStart.format('d-m-Y') }} à {{ offer.dateStart.format('H:i') }} au {{ offer.dateEnd.format('d-m-Y') }} à  {{ offer.dateEnd.format('H:i') }}
+                </div>
+                <div class="my-4 mx-1 max-w-3xl flex justify-between">
+                    <div>
+                        <div>
+                            {% if offer.text|length > 300 %}
+                                {{ offer.text|slice(0, 300) ~ '...' }}
+                            {% else %}
+                                {{ offer.text }}
+                            {% endif %}
+                        </div>
+
+                        <div class="my-8 mx-1 max-w-3xl"> 
+                            {% if offer.tariff|length > 300 %}
+                                {{ offer.tariff|slice(0, 300) ~ '...' }}
+                            {% else %}
+                                {{ offer.tariff }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="w-3/4 max-w-xs mb-4 ">
+                        {% set myFile = offer.files|first %}
+                        <img class="rounded-sm border border-sky-900" src="{{ myFile.filePath }}" alt ="{{ myFile.originalName }}">
+                    </div>
+                 </div>
+                <button class="modalButton relative float-right bottom-5 rounded-full px-2 hover:underline"
+                    data-name="{{ offer.name }}" 
+                    data-text="{{ offer.text }}" 
+                    data-datestart="{{ offer.dateStart | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}" 
+                    data-hourstart="{{ offer.dateStart.format('H:i') }}" 
+                    data-dateend="{{ offer.dateEnd | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}" 
+                    data-hourend="{{ offer.dateEnd.format('H:i') }}" 
+                    data-publishedatdate="{{ offer.publishedAt | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}" 
+                    data-publishedathour="{{ offer.publishedAt.format('H:i') }}" 
+                    data-tariff="{{ offer.Tariff }}" 
+                    data-nbminimumplaces="{{ offer.nbMinimumPlaces }}"
+                >
+                    EN SAVOIR PLUS <span class="font-bold"> > </span></button>
+                </div>
+        {% endfor %}
+        <div class="text-center">
+            {{ knp_pagination_render(offers) }}
+        </div>
+    </div>
+    
+{% endblock %}

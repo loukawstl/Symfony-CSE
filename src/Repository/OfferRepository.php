@@ -64,11 +64,12 @@ class OfferRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    public function findAllLimitedOffers(): ?array
+
+    public function findAllWithNumberOrderPage(): ?array
     {
         return $this->createQueryBuilder('o')
-            ->andWhere('o.typeOfOffer = :type')
-            ->setParameter('type', 'limité')
+            ->andWhere('o.numberOrderPage != :number')
+            ->setParameter('number', 0)
             ->getQuery()
             ->getResult()
         ;

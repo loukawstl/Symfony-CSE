@@ -7,11 +7,11 @@
 
 {% block body %}
 
-    {{ include('admin/limited_offer/_modal.html.twig') }}
-    {{ include('admin/limited_offer/_modalImage.html.twig') }}
+    {{ include('admin/offer/_modal.html.twig') }}
+    {{ include('admin/offer/_modalImage.html.twig') }}
 
     <div class="my-24 border mx-96 p-10 rounded-lg shadow-lg">
-        <h1 class="font-bold mt-2 text-center"> Administration Offres Limitées </h1> 
+        <h1 class="font-bold mt-2 text-center"> Administration Offres </h1> 
 
         {% if errorManager is defined %}
             <div class="text-red-600"> {{ errorManager|raw }} </div>
@@ -63,6 +63,12 @@
                 {{ form_errors(form.numberOrderPage) }}
             </div> 
 
+            <div class="mt-6">
+                {{ form_label(form.typeOfOffer) }}
+                {{ form_widget(form.typeOfOffer , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.typeOfOffer) }}
+            </div>
+
             <div style="display: flex; flex-direction: row; gap : 20px; align-items: center; margin-bottom : 30px">
                 <div class="mt-6">
                     <h2>Image(s) :</h2>
@@ -73,7 +79,7 @@
             </div>
 
             <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; align-items: center">
-                    {% if app.request.attributes.get('_route') == 'app_limited_offer_modify' %}
+                    {% if app.request.attributes.get('_route') == 'app_offer_modify' %}
                         {% for file in offer.files %}
                             <img src="{{ asset( file.filePath ) }}" alt=" {{ file.originalName }}" width="500">
                             <a data-media-id="{{ file.id }}" id="deleteImageButton" class="deleteImageButton bg-red-800 text-white p-3 rounded-xl hover:cursor-pointer hover:bg-red-600">Effacer</a>
@@ -82,7 +88,7 @@
             </div>
             
             <div class="flex mt-8 mb-8 justify-between">   
-                <a id="cancelButton" class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_limited_offer_index') }}">Retour</a>
+                <a id="cancelButton" class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_offer_index') }}">Retour</a>
                 <div class="flex gap-2">
                     <a id="deleteButton" class="bg-red-800 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-red-600">Supprimer</a>
                     {{ form_widget(form.submit) }}
