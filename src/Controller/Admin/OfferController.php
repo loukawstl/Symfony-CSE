@@ -4,8 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Offer;
 use App\Entity\File;
+use App\Entity\NewsletterSubscriber;
 use App\Form\Admin\OfferType;
 use App\Repository\OfferRepository;
+use App\Repository\NewsletterSubscriberRepository;
 use App\Repository\FileRepository;
 use Doctrine\DBAL\Exception as DoctrineDBALException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 #[Route('/admin/gestion-offres')]
 class OfferController extends AbstractController
@@ -40,7 +44,7 @@ class OfferController extends AbstractController
     }
 
     #[Route('/ajouter', name: 'app_offer_create', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $manager): Response
+    public function new(Request $request, EntityManagerInterface $manager, NewsletterSubscriberRepository $newsletterRepository, MailerInterface $mailer): Response
     {
         $offer = new Offer();
         $offer->setDateStart(new \DateTime());
@@ -94,6 +98,31 @@ class OfferController extends AbstractController
 
                 $manager->persist($offer);
                 $manager->flush();
+
+                $newsletterSubscribers = $newsletterRepository->findAll();
+                $mailLink = "http://127.0.0.1:8000/billeterie";
+                $mailFrom = "mailtrap@example.com";
+                $mailSubject = "Nouvelle Offre Limitée : " . $offer->getName();
+                $mailMessage = "Offre valable du " . strftime('%d %B %Y à %H:%M:%S',$offer->getDateStart()->getTimestamp()) . " au " . strftime('%d %B %Y à %H:%M:%S',$offer->getDateEnd()->getTimestamp()) . "\n\n" . $offer->getText() . "\n" .  $offer->getTariff() . "\n\n" . "Accéder à l'offre : " . $mailLink;
+                $mailHeaders = "From:" . $mailFrom . "\r\nContent-Type: text/plain; charset=utf-8\r\n";
+                foreach ($newsletterSubscribers as $newsletterSubscriber){
+                    if ($newsletterSubscriber->isChecked() == true){
+                        $mailTo = $newsletterSubscriber->getEmail();
+                        $email = (new Email())
+                            ->from($mailFrom)
+                            ->to($mailTo)
+                            ->subject($mailSubject)
+                            ->text($mailMessage)
+                        ;
+                        $files = $offer->GetFiles();
+                        foreach($files as $file){
+                            $email->attachFromPath($file->getFilePath());
+                        }
+
+                        $mailer->send($email);
+
+                    }
+                }
 
                 return $this->redirectToRoute('app_offer_index');
             }

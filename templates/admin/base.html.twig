@@ -9,19 +9,11 @@
             {{ encore_entry_link_tags('app') }}
             <link rel="stylesheet" href=" {{ asset('css/navbar.css') }}">
         {% endblock %}
-
-        {% block javascripts %}
-            <script type="text/javascript" src="{{ asset('js/CarouselPartnerships.js') }}"></script>
-        {% endblock %}
     </head>
     <body class="bg-white">
-        {% block navbar %}
-            {% include 'header/show.html.twig' %}
-        {% endblock %}
         <div class="flex flex-column shrink-0 flex-nowrap mx-10">
             <div>
                 {% block sidenav_left %}
-                    {{ render(controller('App\\Controller\\SidenavController::show')) }}
                 {% endblock %}
             </div>
             <div class="mt-10">
@@ -31,10 +23,4 @@
             </div>
         </div>
     </body>
-    <footer>
-        {% block footer %}
-            {% include 'footer/show.html.twig' %}
-
-        {% endblock %}
-    </footer>
 </html>

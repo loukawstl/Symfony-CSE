@@ -43,8 +43,10 @@
                         </div>
                     </div>
                     <div class="w-3/4 max-w-xs mb-4 ">
-                        {% set myFile = offer.files|first %}
-                        <img class="rounded-sm border border-sky-900" src="{{ myFile.filePath }}" alt ="{{ myFile.originalName }}">
+                        {% if offer.files|length > 1 %}
+                            {% set myFile = offer.files|first %}
+                            <img class="rounded-sm border border-sky-900" src="{{ myFile.filePath }}" alt="{{ myFile.originalName }}">
+                        {% endif %}
                     </div>
                  </div>
                 <button class="modalButton relative float-right bottom-5 rounded-full px-2 hover:underline"

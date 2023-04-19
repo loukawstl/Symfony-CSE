@@ -56,10 +56,10 @@ INSERT INTO `file` (`id`, `name`, `file_path`, `original_name`, `offer_id`) VALU
 -- Déchargement des données de la table `offer`
 --
 
-INSERT INTO `offer` (`id`, `name`, `text`, `date_start`, `date_end`, `price`, `type_of_offer`, `nb_minimum_places`, `number_order_page`) VALUES
-(1, 'Sortie musée permanentes', 'une sortie a un musée', '2023-03-13 14:57:22', '2023-03-31 14:57:22', 10, 'permanente', 30, 0),
-(2, 'Sortie musée temporaire', 'une sortie a un musée limité', '2023-03-13 14:57:22', '2023-03-23 14:57:22', 20, 'limité', 10, 1),
-(3, 'sortie au musée', 'let\'s go', '2023-07-15 00:00:00', '2024-01-01 00:00:00', 30, 'limité', 20, 1);
+INSERT INTO `offer` (`id`, `name`, `text`, `date_start`, `date_end`, 'published_at', `tariff`, `type_of_offer`, `nb_minimum_places`, `number_order_page`) VALUES
+(1, 'Sortie musée permanentes', 'une sortie a un musée', '2023-03-13 14:57:22', '2023-03-31 14:57:22', '2023-02-20 12:23:02' ,'tarif enfant: 10€, adulte: 20€', 'permanente', 30, 0),
+(2, 'Sortie musée temporaire', 'une sortie a un musée limité', '2023-03-13 14:57:22', '2023-03-23 14:57:22', '2023-02-15 16:04:20', '5 euros', 'limité', 10, 1),
+(3, 'sortie au musée', 'let\'s go', '2023-07-15 00:00:00', '2024-01-01 00:00:00', '2023-05-15 16:02:20' ,'30', 'limité', 20, 1);
 
 --
 -- Déchargement des données de la table `partnership`
