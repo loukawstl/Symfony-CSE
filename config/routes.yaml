@@ -11,3 +11,7 @@ login:
 a_propos_de_nous:
     path: /a_propos_de_nous
     controller: App\Controller\StaticContentController::aProposDeNous
+
+index:
+    path: /
+    controller: App\Controller\HomePageController::homePage
