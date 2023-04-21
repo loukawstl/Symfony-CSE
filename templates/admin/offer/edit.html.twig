@@ -13,12 +13,16 @@
     <div class="my-24 border mx-96 p-10 rounded-lg shadow-lg">
         <h1 class="font-bold mt-2 text-center"> Administration Offres </h1> 
 
-        {% if errorManager is defined %}
-            <div class="text-red-600"> {{ errorManager|raw }} </div>
-        {% endif %}   
-        {% if successMessage is defined %}
-            <div class="text-green-600"> {{ successMessage|raw }} </div>
-        {% endif %}
+        {% for message in app.flashes('error') %}
+            <div class="text-red-600">
+                {{ message }}
+            </div>
+        {% endfor %} 
+        {% for message in app.flashes('success') %}
+            <div class="text-green-600">
+                {{ message }}
+            </div>
+        {% endfor %} 
           
         {{ form_start(form) }}
             <div class="mt-6">

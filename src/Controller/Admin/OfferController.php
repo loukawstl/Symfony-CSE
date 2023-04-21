@@ -50,7 +50,6 @@ class OfferController extends AbstractController
         $offer->setDateStart(new \DateTime());
         $offer->setDateEnd(new \DateTime());
         $form = $this->createForm(OfferType::class, $offer);
-        $errorManager = "";
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,24 +57,24 @@ class OfferController extends AbstractController
             $check = true;
 
             if($offer->getDateStart()> $offer->getDateEnd()){
-                $errorManager .= "La date de début d'une offre ne peut pas être après sa date de fin! <br>";
+                $this->addFlash('error', 'La date de début d\'une offre ne peut pas être après sa date de fin!');
                 $check = false;
             }
 
             if (count($images)>4){
-                $errorManager .= "Une offre limité ne peut pas avoir plus de 4 images <br>";
+                $this->addFlash('error', 'Une offre limité ne peut pas avoir plus de 4 images.');
                 $check = false;
             }
 
             if (count($images)<1){
-                $errorManager .= "Une offre doit avoir au moins 1 image <br>";
+                $this->addFlash('error', 'Une offre doit avoir au moins 1 image.');
                 $check = false;
             }
 
             foreach ($images as $image) {
                 $extension = $image->guessExtension();
                 if ('png' !== $extension && 'jpg' !== $extension && 'jpeg' !== $extension && 'webp' !== $extension && 'svg' !== $extension) {
-                    $errorManager .= "Format d\'image incorrect <br>";
+                    $this->addFlash('error', 'Format d\'image incorrect.');
                     $check = false;
                 }
             }
@@ -130,7 +129,6 @@ class OfferController extends AbstractController
 
         return $this->render('admin/offer/new.html.twig', [
             'form' => $form->createView(),
-            'errorManager' => $errorManager,
         ]);
     }
 
@@ -155,29 +153,32 @@ class OfferController extends AbstractController
                 $check = true;
 
                 if($offer->getDateStart()> $offer->getDateEnd()){
-                    $errorManager .= "La date de début d'une offre ne peut pas être après sa date de fin! <br>";
+                    $this->addFlash('error', 'La date de début d\'une offre ne peut pas être après sa date de fin!');
                     $check = false;
                 }
     
                 if (count($images)+count($offer->getFiles())>4){
-                    $errorManager .= "Une offre ne peut pas avoir plus de 4 images <br>";
+                    $this->addFlash('error', 'Une offre ne peut pas avoir plus de 4 images.');
                     $check = false;
                 }
     
                 if (count($offer->getFiles()) < 1 && count($images) < 1){
-                    $errorManager .= "Une offre doit avoir au moins 1 image <br>";
+                    $this->addFlash('error', 'Une offre doit avoir au moins 1 image.');
                     $check = false;
                 }
 
                 foreach ($images as $image) {
                     $extension = $image->guessExtension();
                     if ('png' !== $extension && 'jpg' !== $extension && 'jpeg' !== $extension && 'webp' !== $extension && 'svg' !== $extension) {
-                        $errorManager .= "Format d\'image incorrect <br>";
+                        $this->addFlash('error', 'Format d\'image incorrect.');
                         $check = false;
                     }
                 }
 
                 if ($check) {
+
+                    $this->addFlash('success', 'L\'Offre a bien été mise à jour.');
+
                     foreach ($images as $image) {
                         $fileName = md5(uniqid()).'.'.$image->guessExtension();
                         $image->move(
@@ -196,11 +197,11 @@ class OfferController extends AbstractController
 
                     $manager->persist($offer);
                     $manager->flush();
+                    
 
                     return $this->render('admin/offer/edit.html.twig', [
                         'form' => $form->createView(),
                         'offer' => $offer,
-                        'successMessage' => "L'offre a bien été modifiée"
                     ]);
                 }
             }
@@ -244,15 +245,14 @@ class OfferController extends AbstractController
         $check = true;
         $submittedToken = $request->request->get('token');
         $imageId = $request->request->get('id');
-        $errorManager = "";
 
         if (!$this->isCsrfTokenValid('delete-image', $submittedToken)) {
-            $errorManager .= "Suppression impossible : Token CSRF invalide <br>";
+            $this->addFlash('error', 'Suppression impossible : Token CSRF invalide.');
             $check = false;
         }
 
         if (null === ($file = $fileRepository->find($imageId))) {
-            $errorManager .= "Suppression impossible : L\'image n\'a pas été trouvée <br>";
+            $this->addFlash('error', 'Suppression impossible : L\'image n\'a pas été trouvée.');
             $check = false;
         }
 
@@ -264,7 +264,7 @@ class OfferController extends AbstractController
             try {
                 $manager->flush();
             } catch (DoctrineDBALException $e) {
-                $errorManager .= "Erreur lors de la supression de l\'image <br>";
+                $this->addFlash('error', 'Erreur lors de la supression de l\'image.');
             }
 
             return $this->redirectToRoute('app_offer_modify', [
@@ -274,7 +274,6 @@ class OfferController extends AbstractController
 
         return $this->redirectToRoute('app_offer_modify', [
             'id' => $offer->getId(),
-            'errorManager' => $errorManager,
         ]);
     }
 }
