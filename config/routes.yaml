@@ -1,13 +1,17 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
 
 login:
-    path: /login
-    controller: App\Controller\SecurityController::login
+  path: /login
+  controller: App\Controller\SecurityController::login
 
 a_propos_de_nous:
-    path: /a_propos_de_nous
-    controller: App\Controller\StaticContentController::aProposDeNous
+  path: /a_propos_de_nous
+  controller: App\Controller\StaticContentController::aProposDeNous
+
+app_send_form:
+  path: "/survey/{id}/submit"
+  controller: 'App\Controller\SurveyController::submitForm'

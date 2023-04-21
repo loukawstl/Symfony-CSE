@@ -12,31 +12,37 @@
             {% endfor %}
 
             {% for survey in surveys %}
-                {% if survey.id == highest_id %}
+            
+                {% if survey.activated == 1 %}
                     <p class="text-black text-sm font-bold pb-3">{{ survey.question }}</p>
                 {% endif %}
             {% endfor %}
+            
 
-            <form action ="{{ path('app_send_form') }}" method="post">
-                <ul>
-                    {% for surveyOption in surveyOptions %}
-                            {% if surveyOption.survey.id == highest_id %}
-                                <li>
-                                    <label>
-                                        <input class="float-left" type="radio" name="surveyOption" value="{{ surveyOption.id }}">
-                                        {{ surveyOption.label }}
-                                    </label>
-                                </li>
-                            {% endif %}
-                    {% endfor %}
-                </ul>
-            </form>
+                    <ul>
+                        {% for surveyOption in surveyOptions %}
+                                {% if surveyOption.survey.activated == 1 %}
+                                    <li>
+                                        <label>
+                                            <input class="float-left" type="radio" name="surveyOption" value="{{ surveyOption.id }}">
+                                            {{ surveyOption.label }}
+                                            <input type="hidden" name="survey_id" value="{{ highest_id }}">
+                                        </label>
+                                    </li>
+                                {% endif %}
+                        {% endfor %}
+                    </ul>
+                
+                        
+                    <div class="bg-blueHome p-4">
+                        <button class="bg-white border border-black p-1">Voir les réponses</button>
+                        <button type="submit" class="bg-white border border-black p-1">Valider</button>
+                    </div>
+                </form>
+            
+ </div>            
 
-        </div>
-        <div class="bg-blueHome p-4">
-            <button class="bg-white border border-black p-1">Voir les réponses</button>
-            <button type="submit" class="bg-white border border-black p-1">Valider</button>
-        </div>
+
     </div>
     <div>
         <h3 class="text-yellow-800 text-lg mb-1">Accès rapide</h3>
