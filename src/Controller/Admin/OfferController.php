@@ -96,15 +96,21 @@ class OfferController extends AbstractController
                 $offer = $form->getData();
 
                 $manager->persist($offer);
-                $manager->flush();
+                try {
+                    $manager->flush();
+                    $this->addFlash('success', 'L\'offre a bien été créée.');
+                } catch (DoctrineDBALException $e) {
+                    $this->addFlash('success', 'Erreur lors de la création de l\'offre.');
+                }
 
-                $newsletterSubscribers = $newsletterRepository->findAll();
-                $mailLink = "http://127.0.0.1:8000/billeterie";
-                $mailFrom = "mailtrap@example.com";
-                $mailSubject = "Nouvelle Offre Limitée : " . $offer->getName();
-                $mailMessage = "Offre valable du " . strftime('%d %B %Y à %H:%M:%S',$offer->getDateStart()->getTimestamp()) . " au " . strftime('%d %B %Y à %H:%M:%S',$offer->getDateEnd()->getTimestamp()) . "\n\n" . $offer->getText() . "\n" .  $offer->getTariff() . "\n\n" . "Accéder à l'offre : " . $mailLink;
-                $mailHeaders = "From:" . $mailFrom . "\r\nContent-Type: text/plain; charset=utf-8\r\n";
-                foreach ($newsletterSubscribers as $newsletterSubscriber){
+                try {
+                    $newsletterSubscribers = $newsletterRepository->findAll();
+                    $mailLink = "http://127.0.0.1:8000/billeterie";
+                    $mailFrom = "mailtrap@example.com";
+                    $mailSubject = "Nouvelle Offre Limitée : " . $offer->getName();
+                    $mailMessage = "Offre valable du " . strftime('%d %B %Y à %H:%M:%S',$offer->getDateStart()->getTimestamp()) . " au " . strftime('%d %B %Y à %H:%M:%S',$offer->getDateEnd()->getTimestamp()) . "\n\n" . $offer->getText() . "\n" .  $offer->getTariff() . "\n\n" . "Accéder à l'offre : " . $mailLink;
+                    $mailHeaders = "From:" . $mailFrom . "\r\nContent-Type: text/plain; charset=utf-8\r\n";
+                    foreach ($newsletterSubscribers as $newsletterSubscriber){
                     if ($newsletterSubscriber->isChecked() == true){
                         $mailTo = $newsletterSubscriber->getEmail();
                         $email = (new Email())
@@ -121,6 +127,9 @@ class OfferController extends AbstractController
                         $mailer->send($email);
 
                     }
+                }
+                } catch (DoctrineDBALException $e) {
+                    $this->addFlash('error', 'Erreur lors de l\'envoie d\'emails.');
                 }
 
                 return $this->redirectToRoute('app_offer_index');
@@ -177,8 +186,6 @@ class OfferController extends AbstractController
 
                 if ($check) {
 
-                    $this->addFlash('success', 'L\'Offre a bien été mise à jour.');
-
                     foreach ($images as $image) {
                         $fileName = md5(uniqid()).'.'.$image->guessExtension();
                         $image->move(
@@ -196,8 +203,12 @@ class OfferController extends AbstractController
                     $offer = $form->getData();
 
                     $manager->persist($offer);
-                    $manager->flush();
-                    
+                    try {
+                        $manager->flush();
+                        $this->addFlash('success', 'L\'offre a bien été mise à jour.');
+                    } catch (DoctrineDBALException $e) {
+                        $this->addFlash('error', 'Erreur lors de la modification de l\'offre.');
+                    }
 
                     return $this->render('admin/offer/edit.html.twig', [
                         'form' => $form->createView(),
@@ -233,6 +244,8 @@ class OfferController extends AbstractController
             } catch (DoctrineDBALException $e) {
             }
 
+            $this->addFlash('success', 'L\'offre a bien été supprimée.');
+
             return $this->redirectToRoute('app_offer_index');
         }
 
@@ -256,6 +269,11 @@ class OfferController extends AbstractController
             $check = false;
         }
 
+        if (count($offer->getFiles()) === 1){
+            $this->addFlash('error', 'Suppression impossible : Une offre doit avoir au moins 1 image.');
+            $check = false;
+        }
+
         if ($check) {
             if(file_exists($file->getFilePath())){
                 unlink($file->getFilePath());
@@ -263,6 +281,7 @@ class OfferController extends AbstractController
             $manager->remove($file);
             try {
                 $manager->flush();
+                $this->addFlash('success', 'L\'image a bien été supprimée.');
             } catch (DoctrineDBALException $e) {
                 $this->addFlash('error', 'Erreur lors de la supression de l\'image.');
             }

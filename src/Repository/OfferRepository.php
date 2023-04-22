@@ -70,6 +70,8 @@ class OfferRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->andWhere('o.numberOrderPage != :number')
             ->setParameter('number', 0)
+            ->orderBy('o.numberOrderPage', 'DESC')
+            ->addOrderBy('o.publishedAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;

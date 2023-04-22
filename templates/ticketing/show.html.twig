@@ -43,9 +43,9 @@
                         </div>
                     </div>
                     <div class="w-3/4 max-w-xs mb-4 ">
-                        {% if offer.files|length > 1 %}
+                        {% if offer.files|length > 0 %}
                             {% set myFile = offer.files|first %}
-                            <img class="rounded-sm border border-sky-900" src="{{ myFile.filePath }}" alt="{{ myFile.originalName }}">
+                            <img class="rounded-sm border border-sky-900 max-h-44 mx-auto" src="{{ myFile.filePath }}" alt="{{ myFile.originalName }}">
                         {% endif %}
                     </div>
                  </div>

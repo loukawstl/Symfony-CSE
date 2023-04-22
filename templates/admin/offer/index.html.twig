@@ -2,6 +2,16 @@
 
 {% block body %}
     <div class="my-24 border mx-50 p-10 rounded-lg shadow-lg">
+        {% for message in app.flashes('error') %}
+            <div class="text-red-600">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="text-green-600">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="flex justify-between mb-4">
             <h1 class="font-bold mt-2"> Administration Offres </h1>
             <a class="bg-green-800 text-white p-3 rounded-lg hover:bg-green-600" href=" {{ path('app_offer_create') }}"> Ajouter Une Offre </a>
