@@ -18,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-
 class OfferType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -149,9 +148,9 @@ class OfferType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'label' => $builder->getOption('on_edit') ? 'Modifier l\'Offre' : 'Créer l\'Offre',
-            'attr' => [
-                'class' => $builder->getOption('on_edit') ? 'bg-blue-900 text-white p-2 rounded-lg hover:bg-blue-600' : 'bg-green-800 text-white p-3 rounded-lg hover:bg-green-600',
-            ],
+                'attr' => [
+                    'class' => $builder->getOption('on_edit') ? 'bg-blue-900 text-white p-2 rounded-lg hover:bg-blue-600' : 'bg-green-800 text-white p-3 rounded-lg hover:bg-green-600',
+                ],
             ])
         ;
     }

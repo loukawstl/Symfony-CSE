@@ -1,0 +1,39 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <div class="my-24 mx-52 border ml p-10 rounded-lg shadow-lg">
+        {% for message in app.flashes('error') %}
+            <div class="text-red-600">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="text-green-600">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="flex justify-between gap-16 mb-4">
+            <h1 class="font-bold mt-2"> Administration Comptes Administrateurs </h1>
+            <a class="bg-green-800 text-white p-3 rounded-lg hover:bg-green-600" href=" {{ path('app_admin_create') }}"> Ajouter Un Compte Administrateur </a>
+        </div>
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 -ml-4">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr class="bg-white border-b ">
+                    <th class="px-6 py-4"> Nom d'Utilisateur </th>
+                    <th class="px-6 py-4"> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for admin in admins %}
+                    <tr class="bg-white border-b text-blue-800">
+                        <td class="px-6 py-4 max-w-sm"> {{ admin.username }} </td>
+                        <td class="px-4 py-4"> <a class= "bg-blue-900 text-white p-3 rounded-xl hover:bg-blue-600" href=" {{ path('app_admin_modify', {'id': admin.id }) }}"> Afficher </a> </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {{ knp_pagination_render(admins) }}
+        </div>
+    </div>
+{% endblock %}

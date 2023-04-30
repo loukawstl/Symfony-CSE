@@ -1,0 +1,49 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/Modal.js') }}"></script>
+{% endblock javascripts %}
+
+{% block body %}
+
+    {{ include('admin/admin/_modal.html.twig') }}
+
+    <div class="my-24 border mx-96 p-10 rounded-lg shadow-lg">
+        <h1 class="font-bold mt-2 text-center"> Administration Comptes Administrateurs </h1> 
+
+        {% for message in app.flashes('error') %}
+            <div class="text-red-600">
+                {{ message }}
+            </div>
+        {% endfor %} 
+        {% for message in app.flashes('success') %}
+            <div class="text-green-600">
+                {{ message }}
+            </div>
+        {% endfor %} 
+          
+        {{ form_start(form) }}
+            <div class="mt-6">
+                {{ form_label(form.username) }}
+                {{ form_widget(form.username , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.username) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.password) }}
+                {{ form_widget(form.password , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.password) }}
+            </div>
+            
+            <div class="flex mt-8 mb-8 justify-between">   
+                <a id="cancelButton" class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_admin_index') }}">Retour</a>
+                <div class="flex gap-2">
+                    <a id="deleteButton" class="bg-red-800 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-red-600">Supprimer</a>
+                    {{ form_widget(form.submit) }}
+                </div>
+            </div>
+            <p class="font-bold text-xs text--grey-400"> * = champ obligatoire </p>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
