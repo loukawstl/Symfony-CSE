@@ -4,7 +4,6 @@ namespace App\Controller;
 use App\Entity\Offer;
 use App\Entity\StaticContent;
 use App\Repository\OfferRepository;
-use App\Repository\PartnershipRepository;
 use App\Repository\StaticContentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,14 +40,5 @@ class HomePageController extends AbstractController
             'textHomePage' => $textHomePage,
         ]);
     } 
-
-    #[Route('/partenariat', name: 'app_partnership', methods: ['GET'])]
-    public function partnership(PartnershipRepository $partnershipRepository): Response
-    {
-        
-        return $this->render('home_page/partnership.html.twig', [
-            'partnerships' => $partnershipRepository->findAll(),
-        ]);
-    }
 
 }

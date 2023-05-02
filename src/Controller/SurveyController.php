@@ -1,38 +1,43 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\SurveyOption;
+use App\Entity\Survey;
+use App\Entity\SurveyAnswer;
 use App\Repository\SurveyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
-    
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 
 class SurveyController extends AbstractController
 {
-
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    #[Route('/survey/submit', name: 'app_survey_submit', methods: ['POST'])]
+    public function sendForm(Request $request, SurveyRepository $surveyRepository, EntityManagerInterface $manager)
     {
-        $this->entityManager = $entityManager;
-    }
+        $survey = $surveyRepository->find($request->request->get('surveyId'));
+        $optionId = $request->request->get('surveyOption');
+        $check = true;
 
-    #[Route('/send-form/{id}', name: 'app_send_form', methods: ['GET', 'POST'])]
-    public function sendForm(Request $request, $id)
-    {
-        $surveyId = $request->request->get('survey_id');
-        $optionId = $request->request->get('survey_option');
-        $option = $this->entityManager->getRepository(SurveyOption::class)->find($optionId);
-        $response = new SurveyResponse();
-        $response->setSurveyOption($option);
-        $entityManager = $this->entityManager->getManager();
-        $entityManager->persist($response);
-        $entityManager->flush();
-        // redirigez l'utilisateur vers une page de confirmation
-        return $this->redirectToRoute('app_confirmation', ['id' => $id]);
+        if ($optionId = null){
+            $this->addFlash('surveyError', 'Erreur: Vous ne pouvez pas envoyer un formulaire vide.');
+            $check = false;
+        }
+
+        dd($optionId);
+
+        if ($check){
+            $surveyAnswer = new SurveyAnswer();
+            $surveyAnswer->setAnswer($optionId);
+            $surveyAnswer->setSurvey($survey);
+
+            $manager->persist($surveyAnswer);
+            $manager->flush();
+        }
+
+        $referer = $request->headers->get('referer');
+        return new RedirectResponse($referer);
     }
 
     #[Route('/confirmation', name: 'app_confirmation')]

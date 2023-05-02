@@ -17,7 +17,7 @@ class SurveyAnswer
     #[ORM\Column(length: 255)]
     private ?string $answer = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $sentAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'SurveyAnswers')]
@@ -34,7 +34,7 @@ class SurveyAnswer
         return $this->answer;
     }
 
-    public function setAnswer(string $answer): self
+    public function setAnswer(?string $answer): self
     {
         $this->answer = $answer;
 
@@ -46,9 +46,10 @@ class SurveyAnswer
         return $this->sentAt;
     }
 
-    public function setSentAt(\DateTimeInterface $sentAt): self
+    #[ORM\PrePersist]
+    public function setSentAt(): self
     {
-        $this->sentAt = $sentAt;
+        $this->sentAt = new \DateTime();
 
         return $this;
     }

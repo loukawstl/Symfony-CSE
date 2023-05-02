@@ -44,7 +44,7 @@ class OfferController extends AbstractController
     }
 
     #[Route('/ajouter', name: 'app_offer_create', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $manager, NewsletterSubscriberRepository $newsletterRepository, MailerInterface $mailer): Response
+    public function create(Request $request, EntityManagerInterface $manager, NewsletterSubscriberRepository $newsletterRepository, MailerInterface $mailer): Response
     {
         $offer = new Offer();
         $offer->setDateStart(new \DateTime());
@@ -142,7 +142,7 @@ class OfferController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'app_offer_modify', methods: ['GET', 'POST'])]
-    public function edit(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
+    public function modify(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
     {
 
         if (null === $offer) {

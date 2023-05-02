@@ -1,18 +1,21 @@
 security:
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Admin
+                property: email
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         # auto hasher with default options for the User class (and children)
         App\Entity\Admin: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
-    providers:
-        users_in_memory: { memory: null }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

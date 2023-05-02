@@ -1,54 +1,41 @@
 <div class="float-left p-20 max-w-sm flex flex-col gap-8">
     <div>
-        <div class="bg-blueHome text-white p-4 text-center">
-            <h3 >Votre avis compte</h3>
-        </div>
-        <div class="bg-greyHome text-center px-2 py-2">
-            {% set highest_id = 0 %}
-            {% for survey in surveys %}
-                {% if survey.id > highest_id %}
-                    {% set highest_id = survey.id %}
-                {% endif %}
-            {% endfor %}
-
-            {% for survey in surveys %}
-            
-                {% if survey.activated == 1 %}
+        {% if survey is not null and survey is defined %}
+            <div class="bg-blueHome text-white p-4 text-center">
+                <h3 >Votre avis compte</h3>
+            </div>
+            <div class="bg-greyHome text-center px-2 py-2">
+                {% for message in app.flashes('surveyError') %}
+                    <div class="text-red-600">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <form action="{{ path('app_survey_submit') }}" method="post">
                     <p class="text-black text-sm font-bold pb-3">{{ survey.question }}</p>
-                {% endif %}
-            {% endfor %}
-            
-
                     <ul>
                         {% for surveyOption in surveyOptions %}
-                                {% if surveyOption.survey.activated == 1 %}
-                                    <li>
-                                        <label>
-                                            <input class="float-left" type="radio" name="surveyOption" value="{{ surveyOption.id }}">
-                                            {{ surveyOption.label }}
-                                            <input type="hidden" name="survey_id" value="{{ highest_id }}">
-                                        </label>
-                                    </li>
-                                {% endif %}
+                            <li>
+                                <label>
+                                    <input class="float-left" type="radio" name="surveyOption" value="{{ surveyOption.id }}">
+                                    {{ surveyOption.label }}
+                                </label>
+                            </li>
                         {% endfor %}
                     </ul>
-                
-                        
+                    <input type="hidden" name="surveyId" value="{{ survey.id }}"></input>
                     <div class="bg-blueHome p-1 mt-3">
-                        <button class="bg-white border border-black p-1">Voir les réponses</button>
-                        <button type="submit" class="bg-white border border-black p-1">Valider</button>
+                        <button type="submit" class="bg-white border border-black p-1 w-full">Envoyer</button>
                     </div>
                 </form>
-            
- </div>            
-
-
+            </div> 
+        {% endif %}           
     </div>
+
     <div>
         <h3 class="text-yellow-800 text-lg mb-1">Accès rapide</h3>
         <ul class="list-none text-sm">
-            <li><span class="font-bold"> > </span> <a href="/billetterie"> Offre Permanantes / Billeterie </a></li>
-            <li><span class="font-bold"> > </span> <a href="/contact"> Nous Contacter </a></li>
+            <li><span class="font-bold"> > </span> <a href="{{ path('app_ticketing') }}"> Offre Permanantes / Billeterie </a></li>
+            <li><span class="font-bold"> > </span> <a href="{{ path('app_contact') }}"> Nous Contacter </a></li>
         </ul>
     </div>
     <div>

@@ -27,21 +27,17 @@ class SidenavController extends AbstractController
         $this->surveyRepository = $surveyRepository;
         $this->surveyOptionRepository = $surveyOptionRepository;
     }
-    
+
     public function show($nb = 3): Response
     {
+        $activatedSurvey = $this->surveyRepository->findActivatedSurvey();
+        $activatedSurveyOptions = $activatedSurvey->getSurveyOptions();
         $partnerships = $this->partnershipRepository->findRandomPartnerships($nb);
-        $surveys = $this->surveyRepository->findAll();
-        $survey = $this->surveyRepository->findAll();
-        $surveyOptions = $this->surveyOptionRepository->findAll();
-        $highestIdSurvey = $this->surveyRepository->findHighestId();
 
         return $this->render('sidebar_left/show.html.twig', [
-            'partnerships' => $partnerships ,
-            'surveys' => $surveys,
-            'survey' => $survey,
-            'surveyOptions' => $surveyOptions,
-            'highestIdSurvey' => $highestIdSurvey,
+            'partnerships' => $partnerships,
+            'survey' => $activatedSurvey,
+            'surveyOptions' => $activatedSurveyOptions,
         ]);
     }
     

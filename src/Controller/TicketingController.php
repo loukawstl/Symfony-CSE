@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+
 use App\Entity\Offer;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

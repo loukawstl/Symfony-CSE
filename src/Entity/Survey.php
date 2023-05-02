@@ -21,10 +21,10 @@ class Survey
     #[ORM\Column]
     private ?bool $activated = null;
 
-    #[ORM\OneToMany(mappedBy: 'survey', targetEntity: SurveyAnswer::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'survey', targetEntity: SurveyAnswer::class, orphanRemoval: true, cascade: ['persist'], fetch: "EAGER")]
     private Collection $SurveyAnswers;
 
-    #[ORM\OneToMany(mappedBy: 'survey', targetEntity: SurveyOption::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'survey', targetEntity: SurveyOption::class, orphanRemoval: true, cascade: ['persist'], fetch: "EAGER")]
     private Collection $SurveyOptions;
 
     public function __construct()
