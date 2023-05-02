@@ -30,15 +30,20 @@
             </div>
 
             <div class="mt-6">
-                {{ form_label(form.password) }}
-                {{ form_widget(form.password , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_label(form.password.first) }}
+                {{ form_widget(form.password.first, {'attr':{'class': 'rounded-lg border p-1.5 w-full'}}) }}
+            </div>
+
+            <div class="mt-6">
+                {{ form_label(form.password.second) }}
+                {{ form_widget(form.password.second, {'attr':{'class': 'rounded-lg border p-1.5 w-full'}}) }}
                 {{ form_errors(form.password) }}
             </div>
             
             <div class="flex mt-8 mb-8 justify-between">   
-                <a id="cancelButton" class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_admin_index') }}">Retour</a>
+                <a id="cancelButton" class="bg-gray-500 align-middle text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_admin_index') }}">Retour</a>
                 <div class="flex gap-2">
-                    <a id="deleteButton" class="bg-red-800 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-red-600">Supprimer</a>
+                    <a id="deleteButton" class="bg-red-800 align-middle text-white p-3 rounded-lg hover:cursor-pointer hover:bg-red-600">Supprimer</a>
                     {{ form_widget(form.submit) }}
                 </div>
             </div>

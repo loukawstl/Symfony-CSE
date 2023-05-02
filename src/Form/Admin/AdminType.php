@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -28,16 +29,25 @@ class AdminType extends AbstractType
                     'class' => 'font-bold'
                 ],
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe: *',
+            ->add('password', RepeatedType::class, array(
+                'type' => PasswordType::class,
                 'required' => true,
-                'constraints' => [
+                'constraints' => array(
                     new Assert\NotBlank(),
+                    new Assert\Length(array(
+                        'min' => 6,
+                        'minMessage' => 'Le mot de passe est trop court.'
+                    )),
+                ),
+                'first_options'  => array('label' => 'Mot de Passe: *'),
+                'second_options' => array('label' => 'Confirmation du Mot de Passe: *'),
+                'options' => [
+                    'label_attr' => [
+                        'class' => 'font-bold',
+                    ],
                 ],
-                'label_attr' => [
-                    'class' => 'font-bold'
-                ],
-            ])
+                'invalid_message' => "Les valeurs ne correspondent pas."
+            ))
             ->add('submit', SubmitType::class, [
                 'label' => $builder->getOption('on_edit') ? 'Modifier le compte' : 'Créer le compte',
                 'attr' => [
