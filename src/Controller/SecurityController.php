@@ -36,7 +36,7 @@ class SecurityController extends AbstractController
             }
 
             // Rediriger l'utilisateur après la connexion réussie
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('app_offer_index');
         }
 
         // Affichage du formulaire de connexion
