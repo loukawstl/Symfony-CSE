@@ -46,7 +46,7 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $admin = $form->getData();
-            $admin->setPassword(password_hash($request->request->get('password'), PASSWORD_ARGON2I));
+            $admin->setPassword(password_hash($admin->getPassword(), PASSWORD_BCRYPT));
 
             $manager->persist($admin);
             try {
@@ -81,7 +81,7 @@ class AdminController extends AbstractController
 
         if ($form->isSubmitted()) {
             $admin = $form->getData();
-            $admin->setPassword(password_hash($request->request->get('password'), PASSWORD_ARGON2I));
+            $admin->setPassword(password_hash($admin->getPassword(), PASSWORD_BCRYPT));
 
             $manager->persist($admin);
             try {

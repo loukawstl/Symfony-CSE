@@ -56,7 +56,7 @@ class OfferController extends AbstractController
             $images = $form->get('files')->getData();
             $check = true;
 
-            if($offer->getDateStart()> $offer->getDateEnd()){
+            if($offer->getDateStart() > $offer->getDateEnd()){
                 $this->addFlash('error', 'La date de début d\'une offre ne peut pas être après sa date de fin!');
                 $check = false;
             }

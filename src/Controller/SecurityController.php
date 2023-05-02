@@ -31,12 +31,14 @@ class SecurityController extends AbstractController
             // Validation de l'utilisateur et du mot de passe
             $isValid = $this->validateUser($formData['username'], $formData['password']);
             if (!$isValid) {
+                dump($formData['username']);
+                dump($formData['password']);
                 $this->addFlash('error', 'Nom d\'utilisateur ou mot de passe invalide.');
                 return $this->redirectToRoute('login');
             }
 
             // Rediriger l'utilisateur après la connexion réussie
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('app_offer_index');
         }
 
         // Affichage du formulaire de connexion
