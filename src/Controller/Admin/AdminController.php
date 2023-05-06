@@ -8,18 +8,24 @@ use App\Form\Admin\AdminType;
 use Doctrine\DBAL\Exception as DoctrineDBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Service\AdminRedirect;
 
 #[Route('/admin/gestion-administrateurs')]
 class AdminController extends AbstractController
 {
 
     #[Route('/', name: 'app_admin_index')]
-    public function index(AdminRepository $adminRepository, Request $request, PaginatorInterface $paginator): Response
+    public function index(AdminRepository $adminRepository, Request $request, PaginatorInterface $paginator, AdminRedirect $adminRedirect, SessionInterface $session): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
+
         $adminsRequest = $adminRepository->findAll();
 
         $admins = $paginator->paginate(
@@ -38,8 +44,12 @@ class AdminController extends AbstractController
     }
 
     #[Route('/ajouter', name: 'app_admin_create', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $manager): Response
+    public function new(Request $request, EntityManagerInterface $manager, SessionInterface $session): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
+
         $admin = new Admin();
         $form = $this->createForm(AdminType::class, $admin);
 
@@ -65,8 +75,11 @@ class AdminController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'app_admin_modify', methods: ['GET', 'POST'])]
-    public function edit(AdminRepository $adminRepository, Admin $admin, EntityManagerInterface $manager, Request $request): Response
+    public function edit(AdminRepository $adminRepository, Admin $admin, EntityManagerInterface $manager, Request $request, SessionInterface $session): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
 
         if (null === $admin) {
             return $this->redirectToRoute('app_admin_modify', [
@@ -105,8 +118,11 @@ class AdminController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'app_admin_delete', methods: ['DELETE'])]
-    public function delete(AdminRepository $adminRepository, Admin $admin, EntityManagerInterface $manager, Request $request): Response
+    public function delete(AdminRepository $adminRepository, Admin $admin, EntityManagerInterface $manager, Request $request, SessionInterface $session): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
         
         $check = true;
         $submittedToken = $request->request->get('token');
@@ -136,4 +152,5 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('app_admin_index');
     }
+    
 }

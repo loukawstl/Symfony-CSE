@@ -16,16 +16,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use App\Service\AdminRedirect;
 
 #[Route('/admin/gestion-offres')]
 class OfferController extends AbstractController
 {
 
     #[Route('/', name: 'app_offer_index')]
-    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator): Response
+    public function index(OfferRepository $offerRepository, Request $request, PaginatorInterface $paginator, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
+
         $offersRequest = $offerRepository->findAll();
 
         $offers = $paginator->paginate(
@@ -44,8 +50,12 @@ class OfferController extends AbstractController
     }
 
     #[Route('/ajouter', name: 'app_offer_create', methods: ['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $manager, NewsletterSubscriberRepository $newsletterRepository, MailerInterface $mailer): Response
+    public function create(Request $request, EntityManagerInterface $manager, NewsletterSubscriberRepository $newsletterRepository, MailerInterface $mailer, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
+
         $offer = new Offer();
         $offer->setDateStart(new \DateTime());
         $offer->setDateEnd(new \DateTime());
@@ -142,8 +152,11 @@ class OfferController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'app_offer_modify', methods: ['GET', 'POST'])]
-    public function modify(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
+    public function modify(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
 
         if (null === $offer) {
             return $this->redirectToRoute('app_offer_modify', [
@@ -226,8 +239,11 @@ class OfferController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'app_offer_delete', methods: ['DELETE'])]
-    public function delete(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request): Response
+    public function delete(OfferRepository $offerRepository, Offer $offer, EntityManagerInterface $manager, Request $request, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
         
         $check = true;
         $submittedToken = $request->request->get('token');
@@ -253,8 +269,12 @@ class OfferController extends AbstractController
     }
     
     #[Route('/modifier/{id}/supression', name: 'app_offer_image_delete', methods: ['DELETE'])]
-    public function deleteImage(Offer $offer, Request $request, EntityManagerInterface $manager, FileRepository $fileRepository): Response
+    public function deleteImage(Offer $offer, Request $request, EntityManagerInterface $manager, FileRepository $fileRepository, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
+
         $check = true;
         $submittedToken = $request->request->get('token');
         $imageId = $request->request->get('id');

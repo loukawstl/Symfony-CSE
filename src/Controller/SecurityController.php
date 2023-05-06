@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 class SecurityController extends AbstractController
 {
@@ -19,7 +21,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login', name: 'login')]
-    public function login(Request $request)
+    public function login(Request $request, SessionInterface $session)
     {
         $form = $this->createForm(LoginType::class);
 
@@ -36,6 +38,9 @@ class SecurityController extends AbstractController
                 $this->addFlash('error', 'Nom d\'utilisateur ou mot de passe invalide.');
                 return $this->redirectToRoute('login');
             }
+            
+            $session->start();
+            $session->set('connected', 'true');
 
             // Rediriger l'utilisateur après la connexion réussie
             return $this->redirectToRoute('app_offer_index');

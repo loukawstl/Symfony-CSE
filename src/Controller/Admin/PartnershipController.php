@@ -11,24 +11,34 @@ use App\Repository\FileR;
 use Doctrine\DBAL\Exception as DoctrineDBALException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\AdminRedirect;
 
 #[Route('/admin/gestion-partenaires')]
 class PartnershipController extends AbstractController
 {
     #[Route('/', name: 'app_partnership_index', methods: ['GET'])]
-    public function index(PartnershipRepository $partnershipRepository): Response
+    public function index(PartnershipRepository $partnershipRepository, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
+
         return $this->render('admin/partnership/index.html.twig', [
             'partnerships' => $partnershipRepository->findAll(),
         ]);
     }
 
     #[Route('/ajouter', name: 'app_partnership_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $manager): Response
+    public function new(Request $request, EntityManagerInterface $manager, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
+
         $partnership = new Partnership();
         $form = $this->createForm(PartnershipType::class, $partnership);
         $errorManager = "";
@@ -70,8 +80,11 @@ class PartnershipController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'app_partnership_edit', methods: ['GET', 'POST'])]
-    public function edit(PartnershipRepository $partnershipRepository, Partnership $partnership, EntityManagerInterface $manager, Request $request): Response
+    public function edit(PartnershipRepository $partnershipRepository, Partnership $partnership, EntityManagerInterface $manager, Request $request, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
 
         $form = $this->createForm(PartnershipType::class, $partnership, [
             'on_edit' => true,
@@ -123,9 +136,12 @@ class PartnershipController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_partnership_delete', methods: ['DELETE'])]
-    public function delete(PartnershipRepository $partnershipRepository, Partnership $partnership, EntityManagerInterface $manager, Request $request): Response
+    public function delete(PartnershipRepository $partnershipRepository, Partnership $partnership, EntityManagerInterface $manager, Request $request, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
-        
+        if ($adminRedirect->isLogged($session) == false){
+            return $this->redirectToRoute('login');
+        }
+
         $check = true;
         $submittedToken = $request->request->get('token');
 
