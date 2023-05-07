@@ -1,0 +1,58 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('js/surveyOptionManager.js') }}"></script>
+{% endblock javascripts %}
+
+{% block body %}
+    <div class="my-24 mx-52 border ml px-32 rounded-lg shadow-lg">
+        <h1 class="font-bold mt-2 text-center"> Administration Questionnaires </h1> 
+        {% for message in app.flashes('error') %}
+            <div class="text-red-600">
+                {{ message }}
+            </div>
+        {% endfor %} 
+        {{ form_start(form) }}
+            <div class="mt-6">
+                {{ form_label(form.question) }}
+                {{ form_widget(form.question , {'attr':{'class': 'rounded-lg border p-1.5 w-full '}}) }}
+                {{ form_errors(form.question) }}
+            </div>
+            <div class="mt-6">
+                {{ form_label(form.surveyOptions) }}
+                <ul class="surveyOptions"
+                    data-index="{{ form.surveyOptions|length > 0 ? form.surveyOptions|last.vars.name + 1 : 0 }}"
+                    data-prototype="{{ form_widget(form.surveyOptions.vars.prototype)|e('html_attr') }}"
+                >
+                    {% for surveyOptionForm in form.surveyOptions %}
+                        <div class="mt-4">
+                            <li> {{ form_widget(surveyOptionForm.label, {'attr': {'class': 'rounded-lg border p-1.5 w-full'}}) }} </li>
+                            <li> {{ form_errors(surveyOptionForm.label) }} </li>
+                        </div>
+                    {% endfor %}
+                </ul>
+                <button type="button" class="add_item_link bg-green-600 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-green-800" data-collection-holder-class="surveyOptions">Ajouter une option</button>
+                {{ form_errors(form.surveyOptions) }}
+            </div>
+
+
+            <div class="buttons flex mt-8 mb-8 justify-between">   
+                <a class="bg-gray-500 text-white p-3 rounded-lg hover:cursor-pointer hover:bg-gray-300" href="{{ path('app_survey_index') }}">Annuler</a>
+                {{ form_widget(form.submit) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+    <script>
+        document
+        .querySelectorAll('.add_item_link')
+        .forEach(btn => {
+            btn.addEventListener("click", addFormToCollection)
+        });
+
+        document
+        .querySelectorAll('ul.surveyOptions li')
+        .forEach((surveyOptions) => {
+            addOptionFormDeleteLink(surveyOptions)
+        })
+    </script>
+{% endblock %}

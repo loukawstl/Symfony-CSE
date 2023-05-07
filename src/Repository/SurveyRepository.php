@@ -80,4 +80,17 @@ class SurveyRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function deactivateAllSurveys(): void
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        $qb->update('App\Entity\Survey', 's')
+        ->set('s.activated', ':activated')
+        ->setParameter('activated', false)
+        ->where('s.activated = :isActivated')
+        ->setParameter('isActivated', true)
+        ->getQuery()
+        ->execute();
+    }
 }

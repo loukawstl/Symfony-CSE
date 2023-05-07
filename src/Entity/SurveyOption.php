@@ -16,7 +16,7 @@ class SurveyOption
     #[ORM\Column(length: 255)]
     private ?string $label = null;
 
-    #[ORM\ManyToOne(inversedBy: 'SurveyOptions')]
+    #[ORM\ManyToOne(targetEntity: Survey::class, inversedBy: 'SurveyOptions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Survey $survey = null;
 
@@ -48,4 +48,5 @@ class SurveyOption
 
         return $this;
     }
+    
 }
