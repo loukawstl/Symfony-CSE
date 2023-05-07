@@ -71,4 +71,13 @@ class SurveyRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    public function findAllByActivated(): ?array
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.activated', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

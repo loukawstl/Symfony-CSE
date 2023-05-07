@@ -44,7 +44,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/ajouter', name: 'app_admin_create', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $manager, SessionInterface $session): Response
+    public function new(Request $request, EntityManagerInterface $manager, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
         if ($adminRedirect->isLogged($session) == false){
             return $this->redirectToRoute('login');
@@ -75,7 +75,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'app_admin_modify', methods: ['GET', 'POST'])]
-    public function edit(AdminRepository $adminRepository, Admin $admin, EntityManagerInterface $manager, Request $request, SessionInterface $session): Response
+    public function edit(AdminRepository $adminRepository, Admin $admin, EntityManagerInterface $manager, Request $request, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
         if ($adminRedirect->isLogged($session) == false){
             return $this->redirectToRoute('login');
@@ -118,7 +118,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/modifier/{id}', name: 'app_admin_delete', methods: ['DELETE'])]
-    public function delete(AdminRepository $adminRepository, Admin $admin, EntityManagerInterface $manager, Request $request, SessionInterface $session): Response
+    public function delete(AdminRepository $adminRepository, Admin $admin, EntityManagerInterface $manager, Request $request, SessionInterface $session, AdminRedirect $adminRedirect): Response
     {
         if ($adminRedirect->isLogged($session) == false){
             return $this->redirectToRoute('login');

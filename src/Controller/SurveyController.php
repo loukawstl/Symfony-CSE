@@ -40,6 +40,7 @@ class SurveyController extends AbstractController
             $surveyAnswer = new SurveyAnswer();
             $surveyAnswer->setAnswer($optionId);
             $surveyAnswer->setSurvey($survey);
+            $surveyAnswer->setSentAt();
             $cookie = new Cookie( 
                 $surveyName,                             // name
                 true,                                    // content

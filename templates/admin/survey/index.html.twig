@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <div class="my-24 mx-52 border ml p-10 rounded-lg shadow-lg">
+        {% for message in app.flashes('error') %}
+            <div class="text-red-600">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="text-green-600">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="flex justify-between gap-16 mb-4">
+            <h1 class="font-bold mt-2"> Administration Questionnaires </h1>
+            <a class="bg-green-800 text-white py-3 px-2 rounded-lg hover:bg-green-600 text-center" href="#"> Ajouter Un Questionnaire </a>
+        </div>
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 -ml-4">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr class="bg-white border-b ">
+                    <th class="px-6 py-4"> Questionnaire </th>
+                    <th class="px-6 py-4"> Actions </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for survey in surveys %}
+                    {% if survey.activated == true %}
+                        <tr class="bg-orange-400 border-b text-blue-800">
+                            <td class="px-6 py-4 max-w-sm"> {{ survey.question }} </td>
+                            <td class="px-4 py-4 flex flex-column gap-2"> 
+                                <a class= "bg-blue-900 text-white p-3 rounded-xl hover:bg-blue-600" href="#"> Afficher </a> 
+                                <a class= "bg-blue-900 text-white p-3 rounded-xl hover:bg-blue-600" href="#"> Afficher Les Réponses </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr class="bg-white border-b text-blue-800">
+                            <td class="px-6 py-4 max-w-sm"> {{ survey.question }} </td>
+                            <td class="px-4 py-4 flex flex-column gap-2"> 
+                                <a class= "bg-blue-900 text-white p-3 rounded-xl hover:bg-blue-600" href="#"> Afficher </a> 
+                                <a class= "bg-blue-900 text-white p-3 rounded-xl hover:bg-blue-600" href="#"> Afficher Les Réponses </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            {{ knp_pagination_render(surveys) }}
+        </div>
+    </div>
+{% endblock %}
