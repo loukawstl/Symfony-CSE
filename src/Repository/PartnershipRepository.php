@@ -78,6 +78,7 @@ class PartnershipRepository extends ServiceEntityRepository
         $partnershipIds = [];
 
         while($i < $nb){
+        //nb = nombre de parteriats retournés voulu. Le if est là au cas ou il n'y a pas assez de partenariats dans la BDD.
             if ($i < $nbPartnerships){
                 $randomOffset = rand(0, $nbPartnerships - (1 + $i));
 
@@ -85,10 +86,12 @@ class PartnershipRepository extends ServiceEntityRepository
                 if ($i !== 0){
                     $queryBuilder->where($queryBuilder->expr()->notIn('p.id', $partnershipIds));
                 }
+                //retourne un partenariat avec un offset entre 0 et le nombre de partenariats - 1 + le nombre de partenariats déjà retournés
                 $queryBuilder->setMaxResults(1)->setFirstResult($randomOffset);
 
                 $partnership = $queryBuilder->getQuery()->getOneOrNullResult();
                 $partnerships[] = $partnership;
+                //l'id des partenariats sont stockés dans une liste différente afin de les utiliser dans le where
                 $partnershipIds[] = $partnership->getId();
             }
             $i++;
