@@ -28,11 +28,11 @@ class SidenavController extends AbstractController
         $this->surveyOptionRepository = $surveyOptionRepository;
     }
 
-    public function show($nb = 3): Response
+    public function show($nbPartnerships = 3): Response
     {
         $activatedSurvey = $this->surveyRepository->findActivatedSurvey();
         $activatedSurveyOptions = $activatedSurvey->getSurveyOptions();
-        $partnerships = $this->partnershipRepository->findRandomPartnerships($nb);
+        $partnerships = $this->partnershipRepository->findRandomPartnerships($nbPartnerships);
 
         return $this->render('sidebar_left/show.html.twig', [
             'partnerships' => $partnerships,
